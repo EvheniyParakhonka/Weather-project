@@ -1,3 +1,12 @@
 <resources>
     <string name="app_name">Weather Project</string>
+    <string name="get_the_weather">Get The Weather</string>
+    <string-array name="city">
+        <item>Brest</item>
+        <item>Vitebsk</item>
+        <item>Gomel</item>
+        <item>Grodno</item>
+        <item>Mogilev</item>
+        <item>Minsk</item>
+    </string-array>
 </resources>

@@ -18,9 +18,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import piftik.github.com.weatherproject.R;
-import piftik.github.com.weatherproject.utils.TemperatureConverter;
 import piftik.github.com.weatherproject.model.IForecastLoader;
 import piftik.github.com.weatherproject.model.Weather;
+import piftik.github.com.weatherproject.utils.TemperatureConverter;
 
 public class WeatherListFragment extends Fragment {
     private RecyclerView mWeatherRecyclerView;
@@ -28,28 +28,34 @@ public class WeatherListFragment extends Fragment {
     private MyIForecastLOaderListener mListener;
     private Handler mUiHandler;
     private View mMProgress;
+    private String mCityID;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         mForecastLoader = IForecastLoader.Impl.getInstance();
         mListener = new MyIForecastLOaderListener();
         mForecastLoader.addListener(mListener);
         mUiHandler = new Handler(Looper.getMainLooper());
-
-
+        Bundle bundle = getArguments();
+        if (bundle != null) {
+            mCityID = bundle.getString("CITY_ID");
+        }
     }
 
     @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+    public View onCreateView(final LayoutInflater inflater, @Nullable final ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_weather_list, container, false);
 
         mWeatherRecyclerView = (RecyclerView) view.findViewById(R.id.weather_recycler_view);
         mWeatherRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         mMProgress = view.findViewById(R.id.progress);
         mMProgress.setVisibility(View.VISIBLE);
-        getWeatherAsync("Grodno");
+        getWeatherAsync(mCityID);
+
+
         return view;
     }
 
