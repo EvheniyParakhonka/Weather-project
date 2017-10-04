@@ -2,6 +2,8 @@ package piftik.github.com.weatherproject.model;
 
 import android.net.Uri;
 import android.os.AsyncTask;
+import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.text.TextUtils;
 import android.util.Log;
@@ -25,6 +27,12 @@ public class RequestFromOpenWeather extends Fragment implements IForecastLoader 
     private static final String TAG = RequestFromOpenWeather.class.getSimpleName();
     private List<IForecastLOaderListener> mListeners = new ArrayList<>();
     private WeatherAsyncTask mWeatherAsyncTask;
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setRetainInstance(true);
+    }
 
     @Override
     public void addListener(IForecastLOaderListener pListener) {
