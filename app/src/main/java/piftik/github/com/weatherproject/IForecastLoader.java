@@ -1,6 +1,8 @@
-package piftik.github.com.weatherproject.model;
+package piftik.github.com.weatherproject;
 
 import java.util.ArrayList;
+
+import piftik.github.com.weatherproject.request.RequestFromOpenWeather;
 
 public interface IForecastLoader {
     void addListener(final IForecastLOaderListener pListener);
@@ -12,7 +14,7 @@ public interface IForecastLoader {
 //    void getForecastForDay(final long pCityId, final int pDays);
 
     class Impl {
-        public static IForecastLoader getInstance() {
+        static IForecastLoader getInstance() {
             return new RequestFromOpenWeather();
         }
 

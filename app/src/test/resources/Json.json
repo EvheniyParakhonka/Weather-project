@@ -1,0 +1,52 @@
+{
+  "cod": "200",
+  "message": 0.2108,
+  "cnt": 40,
+  "list": [
+    {
+      "dt": 1507647600,
+      "main": {
+        "temp": 281.92,
+        "temp_min": 281.26,
+        "temp_max": 281.92,
+        "pressure": 1002.63,
+        "sea_level": 1021.96,
+        "grnd_level": 1002.63,
+        "humidity": 96,
+        "temp_kf": 0.66
+      },
+      "weather": [
+        {
+          "id": 500,
+          "main": "Rain",
+          "description": "light rain",
+          "icon": "10d"
+        }
+      ],
+      "clouds": {
+        "all": 92
+      },
+      "wind": {
+        "speed": 8.61,
+        "deg": 263.002
+      },
+      "rain": {
+        "3h": 1.36
+      },
+      "sys": {
+        "pod": "d"
+      },
+      "dt_txt": "2017-10-10 15:00:00"
+    }
+
+  ],
+  "city": {
+    "id": 623109,
+    "name": "Prigorod Kolozha",
+    "coord": {
+      "lat": 53.6833,
+      "lon": 23.8167
+    },
+    "country": "BY"
+  }
+}

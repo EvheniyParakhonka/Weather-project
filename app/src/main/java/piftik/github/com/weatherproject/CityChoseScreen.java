@@ -1,4 +1,4 @@
-package piftik.github.com.weatherproject.controller;
+package piftik.github.com.weatherproject;
 
 
 import android.os.Bundle;
@@ -11,8 +11,6 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
-
-import piftik.github.com.weatherproject.R;
 
 public class CityChoseScreen extends Fragment {
 

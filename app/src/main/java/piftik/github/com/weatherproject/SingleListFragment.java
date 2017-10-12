@@ -1,4 +1,4 @@
-package piftik.github.com.weatherproject.view;
+package piftik.github.com.weatherproject;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;

@@ -1,7 +1,7 @@
 package piftik.github.com.weatherproject.utils;
 
 public class TemperatureConverter {
-    public static int convertTemperatureToCelsius(int kelvinTemperature) {
+    public static double convertTemperatureToCelsius(double kelvinTemperature) {
         return kelvinTemperature - 273;
     }
 }

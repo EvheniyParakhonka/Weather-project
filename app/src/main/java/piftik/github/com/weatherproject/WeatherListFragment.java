@@ -1,4 +1,4 @@
-package piftik.github.com.weatherproject.controller;
+package piftik.github.com.weatherproject;
 
 import android.os.Bundle;
 import android.os.Handler;
@@ -17,9 +17,6 @@ import android.widget.Toast;
 import java.util.ArrayList;
 import java.util.List;
 
-import piftik.github.com.weatherproject.R;
-import piftik.github.com.weatherproject.model.IForecastLoader;
-import piftik.github.com.weatherproject.model.Weather;
 import piftik.github.com.weatherproject.utils.TemperatureConverter;
 
 public class WeatherListFragment extends Fragment {

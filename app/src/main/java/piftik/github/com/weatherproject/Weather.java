@@ -1,13 +1,13 @@
-package piftik.github.com.weatherproject.model;
+package piftik.github.com.weatherproject;
 
 public class Weather {
     private final String mDate;
     private final String mWeatherMain;
-    private final int mTemp;
+    private final double mTemp;
     private final String mCountry;
     private final String mCity;
 
-    Weather(String pDate, String pWeatherMain, int pTemp, String pCountry, String pCity) {
+    public Weather(String pDate, String pWeatherMain, double pTemp, String pCountry, String pCity) {
         mDate = pDate;
         mWeatherMain = pWeatherMain;
         mTemp = pTemp;
@@ -15,23 +15,23 @@ public class Weather {
         mCity = pCity;
     }
 
-    public String getDate() {
+    String getDate() {
         return mDate;
     }
 
-    public String getWeatherMain() {
+    String getWeatherMain() {
         return mWeatherMain;
     }
 
-    public int getTemp() {
+    double getTemp() {
         return mTemp;
     }
 
-    public String getCountry() {
+    String getCountry() {
         return mCountry;
     }
 
-    public String getCity() {
+    String getCity() {
         return mCity;
     }
 }
