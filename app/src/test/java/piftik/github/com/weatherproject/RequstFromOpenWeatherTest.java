@@ -9,6 +9,7 @@ import org.robolectric.annotation.Config;
 
 import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.List;
 
 import piftik.github.com.weatherproject.mocks.Mocks;
 import piftik.github.com.weatherproject.request.http.IHttpClient;
@@ -40,12 +41,12 @@ public class RequstFromOpenWeatherTest {
     @Test
     public void parseUserListFromResource() throws Exception {
 
-        when(mHttpClient.makeHttpRequst(Matchers.anyString())).thenReturn(mMockedInputStream);
-        InputStream response = mHttpClient.makeHttpRequst("http://myBackend/getUserList");
+        when(mHttpClient.makeHttpRequest(Matchers.anyString())).thenReturn(mMockedInputStream);
+        InputStream response = mHttpClient.makeHttpRequest("http://myBackend/getUserList");
 
         IJsonParser iJsonParser = new JsonParser();
 
-        ArrayList<Weather> weatherArrayList = iJsonParser.extractWeatherFromJson(response);
+        List<Weather> weatherArrayList = iJsonParser.extractWeatherFromJson(response);
 
         assertEquals(weatherArrayList.get(0).getCity(), "Prigorod Kolozha");
         assertEquals(weatherArrayList.get(0).getTemp(), 281.92);
@@ -54,12 +55,12 @@ public class RequstFromOpenWeatherTest {
 
     @Test
     public void parseUserListGsonParser() throws Exception{
-        when(mHttpClient.makeHttpRequst(Matchers.anyString())).thenReturn(mMockedInputStream);
-        InputStream response = mHttpClient.makeHttpRequst("http://myBackend/getUserList");
+        when(mHttpClient.makeHttpRequest(Matchers.anyString())).thenReturn(mMockedInputStream);
+        InputStream response = mHttpClient.makeHttpRequest("http://myBackend/getUserList");
 
         IJsonParser iGsonParser = new GsonParser();
 
-       ArrayList<Weather> weatherArrayList = iGsonParser.extractWeatherFromJson(response);
+       List<Weather> weatherArrayList = iGsonParser.extractWeatherFromJson(response);
         assertEquals(weatherArrayList.get(0).getDate(), "2017-10-10 15:00:00");
         assertEquals(weatherArrayList.get(0).getTemp(), 281.92);
     }

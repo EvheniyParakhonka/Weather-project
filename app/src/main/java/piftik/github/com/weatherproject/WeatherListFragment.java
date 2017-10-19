@@ -19,6 +19,8 @@ import java.util.List;
 
 import piftik.github.com.weatherproject.utils.TemperatureConverter;
 
+import static android.content.ContentValues.TAG;
+
 public class WeatherListFragment extends Fragment {
     private RecyclerView mWeatherRecyclerView;
     private IForecastLoader mForecastLoader;
@@ -28,14 +30,14 @@ public class WeatherListFragment extends Fragment {
     private String mCityID;
 
     @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
+    public void onCreate(@Nullable final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         mForecastLoader = IForecastLoader.Impl.getInstance();
         mListener = new MyIForecastLOaderListener();
         mForecastLoader.addListener(mListener);
         mUiHandler = new Handler(Looper.getMainLooper());
-        Bundle bundle = getArguments();
+        final Bundle bundle = getArguments();
         if (bundle != null) {
             mCityID = bundle.getString("CITY_ID");
         }
@@ -43,8 +45,8 @@ public class WeatherListFragment extends Fragment {
 
     @Nullable
     @Override
-    public View onCreateView(final LayoutInflater inflater, @Nullable final ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_weather_list, container, false);
+    public View onCreateView(final LayoutInflater inflater, @Nullable final ViewGroup container, @Nullable final Bundle savedInstanceState) {
+        final View view = inflater.inflate(R.layout.fragment_weather_list, container, false);
 
         mWeatherRecyclerView = (RecyclerView) view.findViewById(R.id.weather_recycler_view);
         mWeatherRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
@@ -58,40 +60,40 @@ public class WeatherListFragment extends Fragment {
 
 
     private class WeatherHolder extends RecyclerView.ViewHolder {
-        private TextView mDateView;
-        private TextView mTemperature;
-        private TextView mPlace;
+        private final TextView mDateView;
+        private final TextView mTemperature;
+        private final TextView mPlace;
         private Weather mWeather;
 
-        WeatherHolder(View pView) {
+        WeatherHolder(final View pView) {
             super(pView);
             mDateView = (TextView) pView.findViewById(R.id.date_time_view);
             mTemperature = (TextView) pView.findViewById(R.id.temperature_view);
             mPlace = (TextView) pView.findViewById(R.id.city_country_view);
         }
 
-        void bindWeather(Weather pWeather) {
+        void bindWeather(final Weather pWeather) {
             mWeather = pWeather;
             mDateView.setText(mWeather.getDate());
-            String temp = String.valueOf(TemperatureConverter.convertTemperatureToCelsius(mWeather.getTemp()));
+            final String temp = String.valueOf(TemperatureConverter.convertTemperatureToCelsius(mWeather.getTemp()));
             mTemperature.setText(temp + " \u00B0" + "C");
             mPlace.setText(mWeather.getCity() + ", " + mWeather.getCountry());
         }
     }
 
     private class WeatherAdapter extends RecyclerView.Adapter<WeatherHolder> {
-        private List<Weather> mWeathers;
+        private final List<Weather> mWeathers;
 
         @Override
-        public WeatherHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-            LayoutInflater layoutInflater = LayoutInflater.from(getActivity());
-            View view = layoutInflater.inflate(R.layout.weather_fragment, parent, false);
+        public WeatherHolder onCreateViewHolder(final ViewGroup parent, final int viewType) {
+            final LayoutInflater layoutInflater = LayoutInflater.from(getActivity());
+            final View view = layoutInflater.inflate(R.layout.weather_fragment, parent, false);
             return new WeatherHolder(view);
         }
 
         @Override
-        public void onBindViewHolder(WeatherHolder holder, int position) {
-            Weather weather = mWeathers.get(position);
+        public void onBindViewHolder(final WeatherHolder holder, final int position) {
+            final Weather weather = mWeathers.get(position);
             holder.bindWeather(weather);
         }
 
@@ -100,7 +102,7 @@ public class WeatherListFragment extends Fragment {
             return mWeathers.size();
         }
 
-        WeatherAdapter(List<Weather> pWeathers) {
+        WeatherAdapter(final List<Weather> pWeathers) {
             mWeathers = pWeathers;
         }
     }
@@ -109,13 +111,13 @@ public class WeatherListFragment extends Fragment {
 
 
         @Override
-        public void onSuccess(ArrayList<Weather> pWeathers) {
+        public void onSuccess(final ArrayList<Weather> pWeathers) {
 
             mMProgress.setVisibility(View.GONE);
             if (pWeathers != null && !pWeathers.isEmpty()) {
                 for (final Weather weather : pWeathers) {
-                    Log.d("MainActivity", "onSuccess: " + weather.getWeatherMain());
-                    WeatherAdapter weatherAdapter = new WeatherAdapter(pWeathers);
+                    Log.d(TAG, "onSuccess: " + weather.getWeatherMain());
+                    final WeatherAdapter weatherAdapter = new WeatherAdapter(pWeathers);
                     mWeatherRecyclerView.setAdapter(weatherAdapter);
 
                 }
@@ -146,8 +148,8 @@ public class WeatherListFragment extends Fragment {
         mForecastLoader.removeListener(mListener);
     }
 
-    private void showEmptyView(int errorCOde) {
+    private void showEmptyView(final int errorCode) {
         mMProgress.setVisibility(View.GONE);
-        Toast.makeText(getContext(), "empty " + errorCOde, Toast.LENGTH_LONG).show();
+        Toast.makeText(getContext(), "empty " + errorCode, Toast.LENGTH_LONG).show();
     }
 }

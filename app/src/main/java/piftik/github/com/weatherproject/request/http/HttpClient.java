@@ -10,17 +10,21 @@ import java.net.URL;
 
 
 public class HttpClient implements IHttpClient {
+
     private static final String TAG = HttpClient.class.getSimpleName();
+    private static final int READ_TIMEOUT = 40000;
+    private static final int CONNECT_TIMEOUT = 15000;
+    private static final int RESPONSE_CODE_SUCCESS = 200;
 
     @Override
-    public InputStream makeHttpRequst(String pUrl)  {
+    public InputStream makeHttpRequest(final String pUrl)  {
 
 
 
-        URL mUrl;
+        final URL mUrl;
         try {
             mUrl = new URL(pUrl);
-        } catch (MalformedURLException exception) {
+        } catch (final MalformedURLException exception) {
             Log.e(TAG, exception.toString());
 
             return null;
@@ -31,28 +35,25 @@ public class HttpClient implements IHttpClient {
         try {
             urlConnection = (HttpURLConnection) mUrl.openConnection();
             urlConnection.setRequestMethod("GET");
-            urlConnection.setReadTimeout(10000 /* milliseconds */);
-            urlConnection.setConnectTimeout(15000 /* milliseconds */);
+            urlConnection.setReadTimeout(READ_TIMEOUT /* milliseconds */);
+            urlConnection.setConnectTimeout(CONNECT_TIMEOUT /* milliseconds */);
             urlConnection.connect();
 
-            if (urlConnection.getResponseCode() == 200) {
+            if (urlConnection.getResponseCode() == RESPONSE_CODE_SUCCESS) {
                 inputStream = urlConnection.getInputStream();
 
-
             } else {
-                Log.e(TAG, "Eror respown code" + urlConnection.getResponseCode());
+                Log.e(TAG, "Error response code" + urlConnection.getResponseCode());
             }
 
 
-        } catch (IOException pE) {
-            Log.e(TAG, "Error whith connection " + pE);
+        } catch (final IOException pE) {
+            Log.e(TAG, "Error with connection " + pE);
 
-        } finally {
-            if (urlConnection != null) {
+        }finally {
+            if (urlConnection != null){
                 urlConnection.disconnect();
             }
-
-
         }
         return inputStream;
     }

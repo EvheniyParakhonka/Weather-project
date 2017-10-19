@@ -1,4 +1,4 @@
-package piftik.github.com.weatherproject.request.parser.GsonParsing;
+package piftik.github.com.weatherproject.request.parser.gson_parsing;
 
 public class CityGson {
 

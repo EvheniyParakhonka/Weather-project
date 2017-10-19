@@ -1,11 +1,14 @@
 package piftik.github.com.weatherproject;
 
+import com.google.gson.annotations.SerializedName;
+
 public class Weather {
-    private final String mDate;
-    private final String mWeatherMain;
-    private final double mTemp;
-    private final String mCountry;
-    private final String mCity;
+
+    private String mDate;
+    private String mWeatherMain;
+    private double mTemp;
+    private String mCountry;
+    private String mCity;
 
     public Weather(String pDate, String pWeatherMain, double pTemp, String pCountry, String pCity) {
         mDate = pDate;
@@ -15,23 +18,23 @@ public class Weather {
         mCity = pCity;
     }
 
-    String getDate() {
+    public String getDate() {
         return mDate;
     }
 
-    String getWeatherMain() {
+    public String getWeatherMain() {
         return mWeatherMain;
     }
 
-    double getTemp() {
+    public double getTemp() {
         return mTemp;
     }
 
-    String getCountry() {
+    public String getCountry() {
         return mCountry;
     }
 
-    String getCity() {
+    public String getCity() {
         return mCity;
     }
 }

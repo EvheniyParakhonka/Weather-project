@@ -1,10 +1,10 @@
-package piftik.github.com.weatherproject.request.parser.GsonParsing;
+package piftik.github.com.weatherproject.request.parser.gson_parsing;
 
 import java.util.List;
 
 public class DaysGson {
-    private long dt;
-    private String dt_txt;
+    private final long dt;
+    private final String dt_txt;
     private List<WeatherMain> weather;
     private TempGson main;
 
