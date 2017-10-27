@@ -9,25 +9,22 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.BufferedReader;
-import java.io.DataOutputStream;
-import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
 import piftik.github.com.weatherproject.Weather;
 
-public class PostToMyBackend extends AsyncTask<ArrayList<Weather>, Void, ArrayList> {
+public class PostToMyBackend extends AsyncTask<ArrayList<Weather>, Void, Void> {
 
     private static final int READ_TIMEOUT = 10000;
     private static final int CONNECT_TIMEOUT = 15000;
     private static final String TAG = PostToMyBackend.class.getSimpleName();
 
-    public String createURLRequest() {
+    private String createURLRequest() {
         final Uri.Builder builder = new Uri.Builder();
         builder.scheme("https")
                 .authority("weatherproject-183212.appspot.com")
@@ -40,7 +37,7 @@ public class PostToMyBackend extends AsyncTask<ArrayList<Weather>, Void, ArrayLi
         return builder.build().toString();
     }
 
-    public void postConnect( ArrayList<Weather> pWeathers) {
+    private void postConnect(final List<Weather> pWeathers) {
         try {
 
             final URL urlAddress = new URL(createURLRequest());
@@ -70,13 +67,13 @@ public class PostToMyBackend extends AsyncTask<ArrayList<Weather>, Void, ArrayLi
 
     }
 
-    public String createPostJson(List<Weather> pWeathers) {
+    private String createPostJson(final List<Weather> pWeathers) {
 
-        JSONObject first = new JSONObject();
+        final JSONObject first = new JSONObject();
         try {
             first.put("city", pWeathers.get(0).getCity());
             first.put("country", pWeathers.get(0).getCountry());
-            JSONArray jsonArray = new JSONArray();
+            final JSONArray jsonArray = new JSONArray();
 
             for (int i = 0; i < pWeathers.size(); i++) {
                 jsonArray.put(new JSONObject().put("date", pWeathers.get(i).getDate()).
@@ -84,25 +81,24 @@ public class PostToMyBackend extends AsyncTask<ArrayList<Weather>, Void, ArrayLi
                         put("temp", pWeathers.get(i).getTemp()));
             }
             first.put("list", jsonArray);
-        } catch (JSONException pE) {
+        } catch (final JSONException pE) {
             Log.e(TAG, "json exception");
         }
         return first.toString();
     }
 
+
     @SafeVarargs
     @Override
-    protected final ArrayList<Weather> doInBackground(ArrayList<Weather>... pArrayLists) {
+    protected final Void doInBackground(final ArrayList<Weather>... pArrayLists) {
         try {
             postConnect( pArrayLists[0]);
         } catch (final Exception pE) {
             Log.e(TAG, pE.toString());
         }
-        return pArrayLists[0];
+
+     return null;
     }
 
-    @Override
-    protected void onPostExecute(ArrayList pArrayList) {
 
-    }
 }

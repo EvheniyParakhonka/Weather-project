@@ -9,9 +9,11 @@ import android.util.Log;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 
 import piftik.github.com.weatherproject.Weather;
 import piftik.github.com.weatherproject.backend.PostToMyBackend;
+import piftik.github.com.weatherproject.backend.RequestFromMyBackend;
 import piftik.github.com.weatherproject.request.http.HttpClient;
 import piftik.github.com.weatherproject.request.http.IHttpClient;
 import piftik.github.com.weatherproject.request.parser.IJsonParser;
@@ -27,9 +29,24 @@ public class RequestFromOpenWeather extends Fragment {
 
     }
 
-    public void createAsync(final String pCityID) {
-        final WeatherAsyncTask weatherAsyncTask = new WeatherAsyncTask();
-        weatherAsyncTask.execute(pCityID);
+    public List<Weather> createAsync(final String pCityID) {
+        final IHttpClient iHttpClient = new HttpClient();
+        final IJsonParser iJsonParse = new JsonParser();
+        final String url = createURLRequestForOpenWeather(pCityID);
+        ArrayList<Weather> jsonResponse = null;
+
+        try {
+            final String inputStream = iHttpClient.makeHttpRequest(url);
+            jsonResponse = iJsonParse.extractWeatherFromJson(inputStream);
+        } catch (final IOException pE) {
+            Log.e(TAG, "Error in BackGroundTask");
+        } catch (final Exception pE) {
+            Log.e(TAG, pE.toString());
+        }
+        final PostToMyBackend postToMyBackend = new PostToMyBackend();
+        postToMyBackend.execute(jsonResponse);
+        final RequestFromMyBackend requestFromMyBackend = new RequestFromMyBackend();
+        return jsonResponse;
     }
 
     public String createURLRequestForOpenWeather(final String pCityId) {
@@ -43,34 +60,5 @@ public class RequestFromOpenWeather extends Fragment {
                 .appendQueryParameter("q", pCityId)
                 .appendQueryParameter("APPID", "c47e6bde2548624a496fb7fc2b7efce2");
         return builder.build().toString();
-    }
-
-    private class WeatherAsyncTask extends AsyncTask<String, Void, ArrayList<Weather>> {
-
-        @Override
-        protected ArrayList<Weather> doInBackground(final String... urls) {
-
-            final IHttpClient iHttpClient = new HttpClient();
-            final IJsonParser iJsonParse = new JsonParser();
-            final String url = createURLRequestForOpenWeather(urls[0]);
-            ArrayList<Weather> jsonResponse = null;
-
-            try {
-                final String inputStream = iHttpClient.makeHttpRequest(url);
-                jsonResponse = iJsonParse.extractWeatherFromJson(inputStream);
-            } catch (final IOException pE) {
-                Log.e(TAG, "Error in BackGroundTask");
-            } catch (final Exception pE) {
-                Log.e(TAG, pE.toString());
-            }
-
-            return jsonResponse;
-        }
-
-        @Override
-        protected void onPostExecute(final ArrayList<Weather> pWeathers) {
-            final PostToMyBackend postToMyBackend = new PostToMyBackend();
-            postToMyBackend.execute(pWeathers);
-        }
     }
 }
