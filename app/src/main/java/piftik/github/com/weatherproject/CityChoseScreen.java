@@ -12,7 +12,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
 
-public class CityChoseScreen extends Fragment {
+public class CityChoseScreen extends VisibleFragment {
 
     private Spinner mSpinner;
 

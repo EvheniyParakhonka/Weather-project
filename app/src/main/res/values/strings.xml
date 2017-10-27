@@ -1,6 +1,8 @@
 <resources>
     <string name="app_name">Weather Project</string>
     <string name="get_the_weather">Get The Weather</string>
+    <string name="titleToDialog">New update App</string>
+    <string name="messageToUpdateDialog">You must update the application</string>
     <string-array name="city">
         <item>Brest</item>
         <item>Vitsyebsk</item>

@@ -1,38 +1,33 @@
-package piftik.github.com.weatherproject.backend;
+package piftik.github.com.weatherproject.request.parser;
 
-import android.text.TextUtils;
 import android.util.Log;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.IOException;
-import java.io.InputStream;
 import java.util.ArrayList;
 
 import piftik.github.com.weatherproject.Weather;
-import piftik.github.com.weatherproject.request.http.IReadFromStream;
-import piftik.github.com.weatherproject.request.http.ReadFromStream;
 
 public class GsonParserFromMyBackend implements IGsonParserFromMyBackend {
 
     private static final String TAG = GsonParserFromMyBackend.class.getSimpleName();
 
-    public ArrayList<Weather> extractWeatherFromJsonMyBackend(final InputStream pInputStream) throws Exception {
+    public ArrayList<Weather> extractWeatherFromJsonMyBackend(final String jsonResponse) throws Exception {
 
         final ArrayList<Weather> forecasts = new ArrayList<>();
-        final IReadFromStream iReadFromStream = new ReadFromStream();
+//        final IReadFromStream iReadFromStream = new ReadFromStream();
 
-        String jsonResponse = null;
-        try {
-            jsonResponse = iReadFromStream.readFromStream(pInputStream);
-            if (TextUtils.isEmpty(jsonResponse)) {
-                return null;
-            }
-        } catch (final IOException pE) {
-            Log.e(TAG, pE.toString());
-        }
+////        String jsonResponse = null;
+//        try {
+////            jsonResponse = iReadFromStream.readFromStream(pInputStream);
+//            if (TextUtils.isEmpty(jsonResponse)) {
+//                return null;
+//            }
+//        } catch (final IOException pE) {
+//            Log.e(TAG, pE.toString());
+//        }
 
         try {
             final JSONObject baseJsonResponse = new JSONObject(jsonResponse);

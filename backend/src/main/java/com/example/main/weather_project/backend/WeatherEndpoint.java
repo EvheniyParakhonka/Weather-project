@@ -7,6 +7,7 @@ import com.google.api.server.spi.response.CollectionResponse;
 import com.google.api.server.spi.response.NotFoundException;
 import com.google.appengine.api.datastore.Cursor;
 import com.google.appengine.api.datastore.QueryResultIterator;
+import com.google.common.primitives.Booleans;
 import com.googlecode.objectify.ObjectifyService;
 import com.googlecode.objectify.cmd.Query;
 
@@ -32,8 +33,7 @@ import static com.googlecode.objectify.ObjectifyService.ofy;
         resource = "weather",
         namespace = @ApiNamespace(
                 ownerDomain = "backend.weather_project.main.example.com",
-                ownerName = "backend.weather_project.main.example.com",
-                packagePath = ""
+                ownerName = "backend.weather_project.main.example.com"
         )
 )
 public class WeatherEndpoint {
@@ -58,14 +58,15 @@ public class WeatherEndpoint {
             name = "get",
             path = "weather/{mCity}",
             httpMethod = ApiMethod.HttpMethod.GET)
-    public Weather get(@Named("mCity") String mCity) throws NotFoundException {
+    public Weather get(@Named("mCity") final String mCity) throws NotFoundException {
         logger.info("Getting Weather with ID: " + mCity);
-        Weather weather = ofy().load().type(Weather.class).id(mCity).now();
+        final Weather weather = ofy().load().type(Weather.class).id(mCity).now();
         if (weather == null) {
             throw new NotFoundException("Could not find Weather with ID: " + mCity);
         }
         return weather;
     }
+
 
     /**
      * Inserts a new {@code Weather}.
@@ -74,7 +75,7 @@ public class WeatherEndpoint {
             name = "insert",
             path = "weather",
             httpMethod = ApiMethod.HttpMethod.POST)
-    public Weather insert(Weather weather) {
+    public Weather insert(final Weather weather) {
         // Typically in a RESTful API a POST does not have a known ID (assuming the ID is used in the resource path).
         // You should validate that weather.mCity has not been set. If the ID type is not supported by the
         // Objectify ID generator, e.g. long or String, then you should generate the unique ID yourself prior to saving.
@@ -86,15 +87,16 @@ public class WeatherEndpoint {
         return ofy().load().entity(weather).now();
     }
 
+
 @ApiMethod(
         name = "insertToSite"
 )
-public void insertToSite(@Named("mDate") String mDate,@Named("mWeatherMain") String mWeatherMain,
-        @Named("mTemp") double mTemp,@Named("mCity") String mCity,
-       @Named("mCountry") String mCountry){
-    List<Weather.Days> mList = new ArrayList<>();
+public void insertToSite(@Named("mDate") final String mDate, @Named("mWeatherMain") final String mWeatherMain,
+                         @Named("mTemp") final double mTemp, @Named("mCity") final String mCity,
+                         @Named("mCountry") final String mCountry){
+    final List<Weather.Days> mList = new ArrayList<>();
     mList.add(new Weather.Days(mTemp, mDate,mWeatherMain));
-    Weather weather = new Weather(mCity,mCountry, mList);
+    final Weather weather = new Weather(mCity,mCountry, mList);
     ofy().save().entity(weather).now();
     logger.info("Created User.");
 }
@@ -111,7 +113,7 @@ public void insertToSite(@Named("mDate") String mDate,@Named("mWeatherMain") Str
             name = "update",
             path = "weather/{mCity}",
             httpMethod = ApiMethod.HttpMethod.PUT)
-    public Weather update(@Named("mCity") String mCity, Weather weather) throws NotFoundException {
+    public Weather update(@Named("mCity") final String mCity, final Weather weather) throws NotFoundException {
         // TODO: You should validate your ID parameter against your resource's ID here.
         checkExists(mCity);
         ofy().save().entity(weather).now();
@@ -130,7 +132,7 @@ public void insertToSite(@Named("mDate") String mDate,@Named("mWeatherMain") Str
             name = "remove",
             path = "weather/{mCity}",
             httpMethod = ApiMethod.HttpMethod.DELETE)
-    public void remove(@Named("mCity") String mCity) throws NotFoundException {
+    public void remove(@Named("mCity") final String mCity) throws NotFoundException {
         checkExists(mCity);
         ofy().delete().type(Weather.class).id(mCity).now();
         logger.info("Deleted Weather with ID: " + mCity);
@@ -147,24 +149,24 @@ public void insertToSite(@Named("mDate") String mDate,@Named("mWeatherMain") Str
             name = "list",
             path = "weather",
             httpMethod = ApiMethod.HttpMethod.GET)
-    public CollectionResponse<Weather> list(@Nullable @Named("cursor") String cursor, @Nullable @Named("limit") Integer limit) {
+    public CollectionResponse<Weather> list(@Nullable @Named("cursor") final String cursor, @Nullable @Named("limit") Integer limit) {
         limit = limit == null ? DEFAULT_LIST_LIMIT : limit;
         Query<Weather> query = ofy().load().type(Weather.class).limit(limit);
         if (cursor != null) {
             query = query.startAt(Cursor.fromWebSafeString(cursor));
         }
-        QueryResultIterator<Weather> queryIterator = query.iterator();
-        List<Weather> weatherList = new ArrayList<Weather>(limit);
+        final QueryResultIterator<Weather> queryIterator = query.iterator();
+        final List<Weather> weatherList = new ArrayList<>(limit);
         while (queryIterator.hasNext()) {
             weatherList.add(queryIterator.next());
         }
         return CollectionResponse.<Weather>builder().setItems(weatherList).setNextPageToken(queryIterator.getCursor().toWebSafeString()).build();
     }
 
-    private void checkExists(String mCity) throws NotFoundException {
+    private void checkExists(final String mCity) throws NotFoundException {
         try {
             ofy().load().type(Weather.class).id(mCity).safe();
-        } catch (com.googlecode.objectify.NotFoundException e) {
+        } catch (final com.googlecode.objectify.NotFoundException e) {
             throw new NotFoundException("Could not find Weather with ID: " + mCity);
         }
     }

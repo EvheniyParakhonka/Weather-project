@@ -1,4 +1,4 @@
-package piftik.github.com.weatherproject.backend;
+package piftik.github.com.weatherproject.request.parser;
 
 import java.io.InputStream;
 import java.util.ArrayList;
@@ -7,6 +7,6 @@ import piftik.github.com.weatherproject.Weather;
 
 public interface IGsonParserFromMyBackend {
 
-    ArrayList<Weather> extractWeatherFromJsonMyBackend(InputStream pInputStream) throws Exception ;
+    ArrayList<Weather> extractWeatherFromJsonMyBackend(String pInputStream) throws Exception ;
 
 }

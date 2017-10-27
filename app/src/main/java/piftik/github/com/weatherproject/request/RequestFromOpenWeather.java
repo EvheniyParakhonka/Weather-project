@@ -8,7 +8,6 @@ import android.support.v4.app.Fragment;
 import android.util.Log;
 
 import java.io.IOException;
-import java.io.InputStream;
 import java.util.ArrayList;
 
 import piftik.github.com.weatherproject.Weather;
@@ -22,21 +21,16 @@ public class RequestFromOpenWeather extends Fragment {
 
     private static final String TAG = RequestFromOpenWeather.class.getSimpleName();
 
-    private WeatherAsyncTask mWeatherAsyncTask;
-
     @Override
     public void onCreate(@Nullable final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-
     }
-public void createAsync(String pCityID){
-    mWeatherAsyncTask = new WeatherAsyncTask();
-    mWeatherAsyncTask.execute(pCityID);
-}
 
-
-
+    public void createAsync(final String pCityID) {
+        final WeatherAsyncTask weatherAsyncTask = new WeatherAsyncTask();
+        weatherAsyncTask.execute(pCityID);
+    }
 
     public String createURLRequestForOpenWeather(final String pCityId) {
         final Uri.Builder builder = new Uri.Builder();
@@ -51,11 +45,6 @@ public void createAsync(String pCityID){
         return builder.build().toString();
     }
 
-
-
-
-
-
     private class WeatherAsyncTask extends AsyncTask<String, Void, ArrayList<Weather>> {
 
         @Override
@@ -67,7 +56,7 @@ public void createAsync(String pCityID){
             ArrayList<Weather> jsonResponse = null;
 
             try {
-                final InputStream inputStream = iHttpClient.makeHttpRequest(url);
+                final String inputStream = iHttpClient.makeHttpRequest(url);
                 jsonResponse = iJsonParse.extractWeatherFromJson(inputStream);
             } catch (final IOException pE) {
                 Log.e(TAG, "Error in BackGroundTask");
@@ -78,10 +67,9 @@ public void createAsync(String pCityID){
             return jsonResponse;
         }
 
-
         @Override
         protected void onPostExecute(final ArrayList<Weather> pWeathers) {
-            PostToMyBackend postToMyBackend =new PostToMyBackend();
+            final PostToMyBackend postToMyBackend = new PostToMyBackend();
             postToMyBackend.execute(pWeathers);
         }
     }

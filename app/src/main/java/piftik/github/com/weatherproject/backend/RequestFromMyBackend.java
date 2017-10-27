@@ -1,6 +1,5 @@
 package piftik.github.com.weatherproject.backend;
 
-import android.net.Uri;
 import android.os.AsyncTask;
 import android.support.v4.app.Fragment;
 

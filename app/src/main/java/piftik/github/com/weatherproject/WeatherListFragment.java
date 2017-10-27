@@ -21,7 +21,7 @@ import piftik.github.com.weatherproject.utils.TemperatureConverter;
 
 import static android.content.ContentValues.TAG;
 
-public class WeatherListFragment extends Fragment {
+public class WeatherListFragment extends VisibleFragment {
     private RecyclerView mWeatherRecyclerView;
     private IForecastLoader mForecastLoader;
     private MyIForecastLOaderListener mListener;

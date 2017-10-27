@@ -1,19 +1,14 @@
 package piftik.github.com.weatherproject.request.parser;
 
-import android.text.TextUtils;
 import android.util.Log;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.IOException;
-import java.io.InputStream;
 import java.util.ArrayList;
 
 import piftik.github.com.weatherproject.Weather;
-import piftik.github.com.weatherproject.request.http.IReadFromStream;
-import piftik.github.com.weatherproject.request.http.ReadFromStream;
 
 
 public class JsonParser implements IJsonParser {
@@ -24,21 +19,16 @@ public class JsonParser implements IJsonParser {
     }
 
     @Override
-    public ArrayList<Weather> extractWeatherFromJson(final InputStream pInputStream) throws Exception {
+    public ArrayList<Weather> extractWeatherFromJson(final String pJsonRequest) throws Exception {
         final ArrayList<Weather> forecasts = new ArrayList<>();
-        final IReadFromStream iReadFromStream = new ReadFromStream();
 
-        String jsonResponse = null;
+//        String jsonResponse = null;
+//
+//        if (TextUtils.isEmpty(jsonResponse)) {
+//            return null;
+//        }
         try {
-            jsonResponse = iReadFromStream.readFromStream(pInputStream);
-        } catch (final IOException pE) {
-            Log.e(TAG, pE.toString());
-        }
-        if (TextUtils.isEmpty(jsonResponse)) {
-            return null;
-        }
-        try {
-            final JSONObject baseJsonResponse = new JSONObject(jsonResponse);
+            final JSONObject baseJsonResponse = new JSONObject(pJsonRequest);
             final JSONArray featureArray = baseJsonResponse.getJSONArray("list");
             final JSONObject placeProperitis = baseJsonResponse.getJSONObject("city");
 
@@ -61,10 +51,6 @@ public class JsonParser implements IJsonParser {
             }
         } catch (final JSONException pE) {
             Log.e(TAG, "Error with parsing " + pE);
-        }finally {
-            if (pInputStream != null) {
-                pInputStream.close();
-            }
         }
         return forecasts;
     }

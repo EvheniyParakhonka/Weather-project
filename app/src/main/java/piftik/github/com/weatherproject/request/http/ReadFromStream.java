@@ -4,10 +4,9 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
 import java.nio.charset.Charset;
 
-public class ReadFromStream implements IReadFromStream {
+class ReadFromStream implements IReadFromStream {
 
     @Override
     public String readFromStream(final InputStream inputStream) throws IOException {

@@ -12,10 +12,29 @@ android {
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
+        debug {
+            buildConfigField "String", "BASE_URL", "\"https://weatherprojectdebug.appspot.com/_ah/api/weatherApi/v1/weather\""
+        }
         release {
+            buildConfigField "String", "BASE_URL", "\"https://weatherproject-183212.appspot.com/_ah/api/weatherApi/v1/weather\""
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
+    }
+    flavorDimensions "store"
+
+    productFlavors {
+
+        GooglePlay {
+            dimension "store"
+            buildConfigField "String", "UPDATE_URL", "\"http://mybestappforgooglestore.com\""
+        }
+
+        Amazon {
+            dimension "store"
+            buildConfigField "String", "UPDATE_URL", "\"http://mybestappforamazon.com\""
+        }
+
     }
     sourceSets {
         test {

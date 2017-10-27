@@ -15,10 +15,11 @@ public class HttpClient implements IHttpClient {
     private static final int READ_TIMEOUT = 40000;
     private static final int CONNECT_TIMEOUT = 15000;
     private static final int RESPONSE_CODE_SUCCESS = 200;
+    private IReadFromStream mIReadFromStream = new ReadFromStream();
+    private String mResponse;
 
     @Override
-    public InputStream makeHttpRequest(final String pUrl)  {
-
+    public String makeHttpRequest(final String pUrl)  {
 
 
         final URL mUrl;
@@ -31,7 +32,7 @@ public class HttpClient implements IHttpClient {
         }
 
         HttpURLConnection urlConnection = null;
-        InputStream inputStream = null;
+        final InputStream inputStream;
         try {
             urlConnection = (HttpURLConnection) mUrl.openConnection();
             urlConnection.setRequestMethod("GET");
@@ -41,6 +42,7 @@ public class HttpClient implements IHttpClient {
 
             if (urlConnection.getResponseCode() == RESPONSE_CODE_SUCCESS) {
                 inputStream = urlConnection.getInputStream();
+                mResponse = mIReadFromStream.readFromStream(inputStream);
 
             } else {
                 Log.e(TAG, "Error response code" + urlConnection.getResponseCode());
@@ -55,6 +57,6 @@ public class HttpClient implements IHttpClient {
                 urlConnection.disconnect();
             }
         }
-        return inputStream;
+        return mResponse;
     }
 }

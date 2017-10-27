@@ -9,20 +9,25 @@ import java.util.List;
 public class Weather {
 
     @Id
-    String mCity;
+    private String mCity;
     private String mCountry;
     private List<Days> mList;
+    private final int current_app_version = 1;
 
     public Weather() {
     }
 
-    public Weather(String mCity, String mCountry, List<Days> mList) {
+    public Weather(final String mCity, final String mCountry, final List<Days> mList) {
         this.mCity = mCity;
         this.mCountry = mCountry;
         this.mList = mList;
     }
 
-    public void setCity(String mCity) {
+    public int getCurrent_app_version() {
+        return current_app_version;
+    }
+
+    public void setCity(final String mCity) {
         this.mCity = mCity;
     }
 
@@ -30,7 +35,7 @@ public class Weather {
         return mCity;
     }
 
-    public void setCountry(String mCountry) {
+    public void setCountry(final String mCountry) {
         this.mCountry = mCountry;
     }
 
@@ -38,7 +43,7 @@ public class Weather {
         return mCountry;
     }
 
-    public void setList(List<Days> mList) {
+    public void setList(final List<Days> mList) {
         this.mList = mList;
     }
 
@@ -46,7 +51,7 @@ public class Weather {
         return mList;
     }
 
-    public static class Days {
+    static class Days {
 
         private double mTemp;
         private String mDate;
@@ -55,21 +60,21 @@ public class Weather {
         public Days() {
         }
 
-        public Days(double mTemp, String mDate, String mWeatherMain) {
+        Days(final double mTemp, final String mDate, final String mWeatherMain) {
             this.mTemp = mTemp;
             this.mDate = mDate;
             this.mWeatherMain = mWeatherMain;
         }
 
-        public void setDate(String mDate) {
+        public void setDate(final String mDate) {
             this.mDate = mDate;
         }
 
-        public void setWeatherMain(String mWeatherMain) {
+        public void setWeatherMain(final String mWeatherMain) {
             this.mWeatherMain = mWeatherMain;
         }
 
-        public void setTemp(double mTemp) {
+        public void setTemp(final double mTemp) {
             this.mTemp = mTemp;
         }
 
