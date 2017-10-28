@@ -11,7 +11,7 @@ import piftik.github.com.weatherproject.update.ServiceToCheckUpdate;
 import piftik.github.com.weatherproject.update.UpdateDialogFragment;
 
 public abstract class VisibleFragment extends Fragment {
-    public static final String UPDATE_DIALOG = "UpdateDialog";
+    private static final String UPDATE_DIALOG = "UpdateDialog";
 //    private static final String TAG = "VisibleFragment";
 
     @Override

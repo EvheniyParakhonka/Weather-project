@@ -1,6 +1,6 @@
 package piftik.github.com.weatherproject.request.parser.gson_parsing;
 
-public class CityGson {
+class CityGson {
 
     private String name;
     private String country;
@@ -9,7 +9,7 @@ public class CityGson {
         return name;
     }
 
-    public void setName(String pName) {
+    public void setName(final String pName) {
         name = pName;
     }
 
@@ -17,11 +17,11 @@ public class CityGson {
         return country;
     }
 
-    public void setCountry(String pCountry) {
+    public void setCountry(final String pCountry) {
         country = pCountry;
     }
 
-    public CityGson(String pName, String pCountry) {
+    public CityGson(final String pName, final String pCountry) {
         name = pName;
         country = pCountry;
     }

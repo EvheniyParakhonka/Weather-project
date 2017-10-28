@@ -14,7 +14,7 @@ public class GsonParserFromMyBackend implements IGsonParserFromMyBackend {
 
     private static final String TAG = GsonParserFromMyBackend.class.getSimpleName();
 
-    public ArrayList<Weather> extractWeatherFromJsonMyBackend(final String jsonResponse) throws Exception {
+    public ArrayList<Weather> extractWeatherFromJsonMyBackend(final String jsonResponse) {
 
         final ArrayList<Weather> forecasts = new ArrayList<>();
 //        final IReadFromStream iReadFromStream = new ReadFromStream();

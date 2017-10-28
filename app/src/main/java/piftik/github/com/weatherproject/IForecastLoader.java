@@ -3,7 +3,6 @@ package piftik.github.com.weatherproject;
 import java.util.ArrayList;
 
 import piftik.github.com.weatherproject.backend.RequestFromMyBackend;
-import piftik.github.com.weatherproject.request.RequestFromOpenWeather;
 
 public interface IForecastLoader {
     void addListener(final IForecastLOaderListener pListener);

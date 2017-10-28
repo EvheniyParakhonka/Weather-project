@@ -7,7 +7,6 @@ import com.google.api.server.spi.response.CollectionResponse;
 import com.google.api.server.spi.response.NotFoundException;
 import com.google.appengine.api.datastore.Cursor;
 import com.google.appengine.api.datastore.QueryResultIterator;
-import com.google.common.primitives.Booleans;
 import com.googlecode.objectify.ObjectifyService;
 import com.googlecode.objectify.cmd.Query;
 
@@ -36,7 +35,7 @@ import static com.googlecode.objectify.ObjectifyService.ofy;
                 ownerName = "backend.weather_project.main.example.com"
         )
 )
-public class WeatherEndpoint {
+class WeatherEndpoint {
 
     private static final Logger logger = Logger.getLogger(WeatherEndpoint.class.getName());
 

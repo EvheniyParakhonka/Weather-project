@@ -1,18 +1,5 @@
 package piftik.github.com.weatherproject.backend;
 
-import android.os.AsyncTask;
-import android.util.Log;
-
-import java.util.ArrayList;
-
-import piftik.github.com.weatherproject.BuildConfig;
-import piftik.github.com.weatherproject.Weather;
-import piftik.github.com.weatherproject.request.RequestFromOpenWeather;
-import piftik.github.com.weatherproject.request.http.HttpClient;
-import piftik.github.com.weatherproject.request.http.IHttpClient;
-import piftik.github.com.weatherproject.request.parser.GsonParserFromMyBackend;
-import piftik.github.com.weatherproject.request.parser.IGsonParserFromMyBackend;
-
 //class AsyncEndpoint extends AsyncTask<String, Object, ArrayList<piftik.github.com.weatherproject.Weather>> {
 //    private static final String TAG = AsyncEndpoint.class.getSimpleName();
 //    private String createURLRequest(final String pCityId) {

@@ -11,7 +11,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import piftik.github.com.weatherproject.R;
-import piftik.github.com.weatherproject.WeatherListMain;
+import piftik.github.com.weatherproject.WeatherListMainActivity;
 
 import static android.support.test.espresso.Espresso.onData;
 import static android.support.test.espresso.Espresso.onView;
@@ -26,25 +26,25 @@ import static org.hamcrest.Matchers.is;
 public class WeatherListMainTest {
 
     @Rule
-    public ActivityTestRule<WeatherListMain> mActivityTestRule = new ActivityTestRule<>(WeatherListMain.class);
+    private final ActivityTestRule<WeatherListMainActivity> mActivityTestRule = new ActivityTestRule<>(WeatherListMainActivity.class);
 
     @Test
     public void weatherListMainTest() {
 
 
-        String[] myArray =
+        final String[] myArray =
                 mActivityTestRule.getActivity().getResources()
                         .getStringArray(R.array.city);
 
-        for (String aMyArray : myArray) {
-            ViewInteraction spinner = onView(
+        for (final String aMyArray : myArray) {
+            final ViewInteraction spinner = onView(
                     allOf(withId(R.id.spiner_city), isDisplayed()));
             spinner.perform(click());
             onData(is(aMyArray)).perform(click());
         }
 
 
-        ViewInteraction button = onView(
+        final ViewInteraction button = onView(
                 allOf(withId(R.id.button_get_wether), withText("Get The Weather"), isDisplayed()));
         button.perform(click());
 

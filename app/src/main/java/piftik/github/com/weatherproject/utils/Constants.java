@@ -1,5 +1,6 @@
 package piftik.github.com.weatherproject.utils;
 
-public class Constants {
+final class Constants {
+    static final int TEMP_DIFF = 273;
 
 }

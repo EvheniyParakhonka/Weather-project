@@ -1,5 +1,5 @@
 package piftik.github.com.weatherproject;
 
-class Constant {
+final class Constant {
     static final int SDK_VERSION = 21;
 }

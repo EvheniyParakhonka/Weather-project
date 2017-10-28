@@ -10,17 +10,16 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
-import java.util.List;
 
-import piftik.github.com.weatherproject.utils.TemperatureConverter;
+import piftik.github.com.weatherproject.recycler.WeatherAdapter;
 
 import static android.content.ContentValues.TAG;
 
 public class WeatherListFragment extends VisibleFragment {
+
     private RecyclerView mWeatherRecyclerView;
     private IForecastLoader mForecastLoader;
     private MyIForecastLOaderListener mListener;
@@ -34,12 +33,18 @@ public class WeatherListFragment extends VisibleFragment {
 
         mForecastLoader = IForecastLoader.Impl.getInstance();
         mListener = new MyIForecastLOaderListener();
-        mForecastLoader.addListener(mListener);
+
         mUiHandler = new Handler(Looper.getMainLooper());
         final Bundle bundle = getArguments();
         if (bundle != null) {
             mCityID = bundle.getString("CITY_ID");
         }
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        mForecastLoader.addListener(mListener);
     }
 
     @Nullable
@@ -53,61 +58,10 @@ public class WeatherListFragment extends VisibleFragment {
         mMProgress.setVisibility(View.VISIBLE);
         getWeatherAsync(mCityID);
 
-
         return view;
     }
 
-
-    private class WeatherHolder extends RecyclerView.ViewHolder {
-        private final TextView mDateView;
-        private final TextView mTemperature;
-        private final TextView mPlace;
-        private Weather mWeather;
-
-        WeatherHolder(final View pView) {
-            super(pView);
-            mDateView = (TextView) pView.findViewById(R.id.date_time_view);
-            mTemperature = (TextView) pView.findViewById(R.id.temperature_view);
-            mPlace = (TextView) pView.findViewById(R.id.city_country_view);
-        }
-
-        void bindWeather(final Weather pWeather) {
-            mWeather = pWeather;
-            mDateView.setText(mWeather.getDate());
-            final String temp = String.valueOf(TemperatureConverter.convertTemperatureToCelsius(mWeather.getTemp()));
-            mTemperature.setText(temp + " \u00B0" + "C");
-            mPlace.setText(mWeather.getCity() + ", " + mWeather.getCountry());
-        }
-    }
-
-    private class WeatherAdapter extends RecyclerView.Adapter<WeatherHolder> {
-        private final List<Weather> mWeathers;
-
-        @Override
-        public WeatherHolder onCreateViewHolder(final ViewGroup parent, final int viewType) {
-            final LayoutInflater layoutInflater = LayoutInflater.from(getActivity());
-            final View view = layoutInflater.inflate(R.layout.weather_fragment, parent, false);
-            return new WeatherHolder(view);
-        }
-
-        @Override
-        public void onBindViewHolder(final WeatherHolder holder, final int position) {
-            final Weather weather = mWeathers.get(position);
-            holder.bindWeather(weather);
-        }
-
-        @Override
-        public int getItemCount() {
-            return mWeathers.size();
-        }
-
-        WeatherAdapter(final List<Weather> pWeathers) {
-            mWeathers = pWeathers;
-        }
-    }
-
     private class MyIForecastLOaderListener implements IForecastLoader.IForecastLOaderListener {
-
 
         @Override
         public void onSuccess(final ArrayList<Weather> pWeathers) {
@@ -116,17 +70,17 @@ public class WeatherListFragment extends VisibleFragment {
             if (pWeathers != null && !pWeathers.isEmpty()) {
                 for (final Weather weather : pWeathers) {
                     Log.d(TAG, "onSuccess: " + weather.getWeatherMain());
-                    final WeatherAdapter weatherAdapter = new WeatherAdapter(pWeathers);
+                    final WeatherAdapter weatherAdapter = new WeatherAdapter(WeatherListFragment.this, pWeathers);
                     mWeatherRecyclerView.setAdapter(weatherAdapter);
 
                 }
             }
         }
 
-
         @Override
         public void onError(final int errorCode) {
             mUiHandler.post(new Runnable() {
+
                 @Override
                 public void run() {
                     showEmptyView(errorCode);
@@ -136,7 +90,7 @@ public class WeatherListFragment extends VisibleFragment {
 
     }
 
-    public void getWeatherAsync(final String pStingId) {
+    private void getWeatherAsync(final String pStingId) {
         mForecastLoader.getForecast(pStingId);
     }
 

@@ -83,7 +83,7 @@ public class RequestFromMyBackend extends Fragment implements IForecastLoader {
         }
 
     }
-    public void showWeather (final ArrayList<Weather> pWeathers){
+    private void showWeather(final ArrayList<Weather> pWeathers){
         if (!mListeners.isEmpty() && pWeathers != null){
             for (final IForecastLOaderListener listener : mListeners){
                 listener.onSuccess(pWeathers);

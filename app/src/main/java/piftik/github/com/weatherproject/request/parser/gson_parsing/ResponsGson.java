@@ -2,11 +2,11 @@ package piftik.github.com.weatherproject.request.parser.gson_parsing;
 
 import java.util.List;
 
-public class ResponsGson {
+class ResponsGson {
     private final CityGson city;
     private final List<DaysGson> list;
 
-    public ResponsGson(CityGson pCity, List<DaysGson> pList) {
+    public ResponsGson(final CityGson pCity, final List<DaysGson> pList) {
         city = pCity;
         list = pList;
     }

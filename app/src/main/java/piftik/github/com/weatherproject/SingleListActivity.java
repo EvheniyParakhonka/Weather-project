@@ -8,7 +8,7 @@ import android.support.v4.app.FragmentManager;
 
 import piftik.github.com.weatherproject.update.ServiceToCheckUpdate;
 
-abstract class SingleListFragment extends FragmentActivity {
+abstract class SingleListActivity extends FragmentActivity {
     protected abstract Fragment createFragment();
     @Override
     protected void onCreate(final Bundle savedInstanceState) {

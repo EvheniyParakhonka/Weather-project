@@ -12,14 +12,9 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
 
-public class CityChoseScreen extends VisibleFragment {
+public class CityChoseScreenFragment extends VisibleFragment {
 
     private Spinner mSpinner;
-
-    @Override
-    public void onCreate(@Nullable final Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-    }
 
     @Nullable
     @Override

@@ -19,7 +19,7 @@ public class JsonParser implements IJsonParser {
     }
 
     @Override
-    public ArrayList<Weather> extractWeatherFromJson(final String pJsonRequest) throws Exception {
+    public ArrayList<Weather> extractWeatherFromJson(final String pJsonRequest) {
         final ArrayList<Weather> forecasts = new ArrayList<>();
 
 //        String jsonResponse = null;

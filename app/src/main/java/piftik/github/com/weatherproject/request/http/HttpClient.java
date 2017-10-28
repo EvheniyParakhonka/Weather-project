@@ -15,7 +15,7 @@ public class HttpClient implements IHttpClient {
     private static final int READ_TIMEOUT = 40000;
     private static final int CONNECT_TIMEOUT = 15000;
     private static final int RESPONSE_CODE_SUCCESS = 200;
-    private IReadFromStream mIReadFromStream = new ReadFromStream();
+    private final IReadFromStream mIReadFromStream = new ReadFromStream();
     private String mResponse;
 
     @Override

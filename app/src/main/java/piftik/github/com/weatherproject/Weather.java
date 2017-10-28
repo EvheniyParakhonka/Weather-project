@@ -2,11 +2,11 @@ package piftik.github.com.weatherproject;
 
 public class Weather {
 
-    private String mDate;
-    private String mWeatherMain;
+    private final String mDate;
+    private final String mWeatherMain;
     private final double mTemp;
-    private String mCountry;
-    private String mCity;
+    private final String mCountry;
+    private final String mCity;
 
     public Weather(final String pDate, final String pWeatherMain, final double pTemp, final String pCountry, final String pCity) {
         mDate = pDate;

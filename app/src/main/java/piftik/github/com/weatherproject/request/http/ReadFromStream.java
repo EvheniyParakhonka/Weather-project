@@ -1,35 +1,32 @@
 package piftik.github.com.weatherproject.request.http;
 
-import java.io.BufferedReader;
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.nio.charset.Charset;
 
-class ReadFromStream implements IReadFromStream {
+ public class ReadFromStream implements IReadFromStream {
 
     @Override
     public String readFromStream(final InputStream inputStream) throws IOException {
-        StringBuilder output;
 
+        ByteArrayOutputStream result;
         try {
-            output = new StringBuilder();
+            result = new ByteArrayOutputStream();
             if (inputStream != null) {
-                final InputStreamReader inputStreamReader = new InputStreamReader(inputStream, Charset.forName("UTF-8"));
-                final BufferedReader reader = new BufferedReader(inputStreamReader);
-                String line = reader.readLine();
-                while (line != null) {
-                    output.append(line);
-                    line = reader.readLine();
+
+                final byte[] buffer = new byte[1024];
+                int length;
+                while ((length = inputStream.read(buffer)) != -1) {
+                    result.write(buffer, 0, length);
                 }
+
             }
-        }
-        finally {
+        } finally {
             if (inputStream != null) {
                 inputStream.close();
             }
         }
 
-        return output.toString();
+        return result.toString();
     }
 }

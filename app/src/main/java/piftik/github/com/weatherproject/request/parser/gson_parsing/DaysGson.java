@@ -2,13 +2,13 @@ package piftik.github.com.weatherproject.request.parser.gson_parsing;
 
 import java.util.List;
 
-public class DaysGson {
+class DaysGson {
     private final long dt;
     private final String dt_txt;
     private List<WeatherMain> weather;
     private TempGson main;
 
-    public DaysGson(long pDt, String pDt_txt, List<WeatherMain> pWeather, TempGson pMain) {
+    public DaysGson(final long pDt, final String pDt_txt, final List<WeatherMain> pWeather, final TempGson pMain) {
         dt = pDt;
         dt_txt = pDt_txt;
         weather = pWeather;
@@ -19,7 +19,7 @@ public class DaysGson {
         return main;
     }
 
-    public void setMain(TempGson pMain) {
+    public void setMain(final TempGson pMain) {
         main = pMain;
     }
 
@@ -37,7 +37,7 @@ public class DaysGson {
         return weather;
     }
 
-    public void setWeather(List<WeatherMain> pWeather) {
+    public void setWeather(final List<WeatherMain> pWeather) {
         weather = pWeather;
     }
 }

@@ -1,6 +1,5 @@
 package piftik.github.com.weatherproject.backend;
 
-import android.net.Uri;
 import android.os.AsyncTask;
 import android.util.Log;
 
@@ -16,6 +15,7 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
+import piftik.github.com.weatherproject.BuildConfig;
 import piftik.github.com.weatherproject.Weather;
 
 public class PostToMyBackend extends AsyncTask<ArrayList<Weather>, Void, Void> {
@@ -24,23 +24,10 @@ public class PostToMyBackend extends AsyncTask<ArrayList<Weather>, Void, Void> {
     private static final int CONNECT_TIMEOUT = 15000;
     private static final String TAG = PostToMyBackend.class.getSimpleName();
 
-    private String createURLRequest() {
-        final Uri.Builder builder = new Uri.Builder();
-        builder.scheme("https")
-                .authority("weatherproject-183212.appspot.com")
-                .appendPath("_ah")
-                .appendPath("api")
-                .appendPath("weatherApi")
-                .appendPath("v1")
-                .appendPath("weather");
-
-        return builder.build().toString();
-    }
-
     private void postConnect(final List<Weather> pWeathers) {
         try {
 
-            final URL urlAddress = new URL(createURLRequest());
+            final URL urlAddress = new URL(BuildConfig.BASE_URL);
             final HttpURLConnection httpURLConnection = (HttpURLConnection) urlAddress.openConnection();
             httpURLConnection.setRequestMethod("POST");
             httpURLConnection.setRequestProperty("Content-Type", "application/json");
@@ -87,18 +74,16 @@ public class PostToMyBackend extends AsyncTask<ArrayList<Weather>, Void, Void> {
         return first.toString();
     }
 
-
     @SafeVarargs
     @Override
     protected final Void doInBackground(final ArrayList<Weather>... pArrayLists) {
         try {
-            postConnect( pArrayLists[0]);
+            postConnect(pArrayLists[0]);
         } catch (final Exception pE) {
             Log.e(TAG, pE.toString());
         }
 
-     return null;
+        return null;
     }
-
 
 }

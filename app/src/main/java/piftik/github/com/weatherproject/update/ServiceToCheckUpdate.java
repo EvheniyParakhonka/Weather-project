@@ -53,7 +53,7 @@ public class ServiceToCheckUpdate extends IntentService {
         }
     }
 
-    public boolean isOnline() {
+    private boolean isOnline() {
         final ConnectivityManager cm =
                 (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
 
