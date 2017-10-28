@@ -1,6 +1,5 @@
 package piftik.github.com.weatherproject;
 
-
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -39,7 +38,7 @@ public class CityChoseScreenFragment extends VisibleFragment {
                 bundle.putString("CITY_ID", cityID);
                 fragment.setArguments(bundle);
                 final FragmentManager fragmentManager = getFragmentManager();
-                fragmentManager.beginTransaction().replace(R.id.fragment_container, fragment).commit();
+                fragmentManager.beginTransaction().replace(R.id.fragment_container, fragment).addToBackStack(null).commit();
             }
         });
 

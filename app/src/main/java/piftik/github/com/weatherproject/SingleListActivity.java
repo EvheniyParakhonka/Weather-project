@@ -28,6 +28,7 @@ abstract class SingleListActivity extends FragmentActivity {
     protected void onResume() {
         super.onResume();
         final Intent intent = new Intent(this, ServiceToCheckUpdate.class);
+        intent.addFlags(Intent.FLAG_FROM_BACKGROUND);
         intent.putExtra("VERSION_APP", BuildConfig.VERSION_CODE);
         startService(intent);
     }
