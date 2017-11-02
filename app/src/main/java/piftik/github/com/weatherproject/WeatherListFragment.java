@@ -27,6 +27,7 @@ public class WeatherListFragment extends VisibleFragment {
     private View mMProgress;
     private String mCityID;
 
+//    Code style
     @Override
     public void onCreate(@Nullable final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

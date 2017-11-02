@@ -32,6 +32,7 @@ public class RequestFromMyBackend extends Fragment implements IForecastLoader {
         mListeners.remove(pListener);
 
         if (mListeners.isEmpty()) {
+//            TODO move this logic to method like onListenersEmpty()
             if (mAsyncEndpoint != null && mAsyncEndpoint.getStatus() == AsyncTask.Status.RUNNING) {
                 mAsyncEndpoint.cancel(true);
             }
@@ -40,6 +41,7 @@ public class RequestFromMyBackend extends Fragment implements IForecastLoader {
 
     @Override
     public void getForecast(final String pCityId) {
+//        TODO Create method for checking for reuse
         if (mAsyncEndpoint != null && mAsyncEndpoint.getStatus() == AsyncTask.Status.RUNNING) {
             return;
         }

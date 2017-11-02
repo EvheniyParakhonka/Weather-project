@@ -20,6 +20,7 @@ import piftik.github.com.weatherproject.Weather;
 
 public class PostToMyBackend extends AsyncTask<ArrayList<Weather>, Void, Void> {
 
+//    TODO remove unused constans
     private static final int READ_TIMEOUT = 10000;
     private static final int CONNECT_TIMEOUT = 15000;
     private static final String TAG = PostToMyBackend.class.getSimpleName();
@@ -54,6 +55,7 @@ public class PostToMyBackend extends AsyncTask<ArrayList<Weather>, Void, Void> {
 
     }
 
+//    TODO move city, country to constan
     private String createPostJson(final List<Weather> pWeathers) {
 
         final JSONObject first = new JSONObject();

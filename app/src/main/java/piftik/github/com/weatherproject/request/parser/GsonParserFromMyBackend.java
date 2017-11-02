@@ -32,11 +32,13 @@ public class GsonParserFromMyBackend implements IGsonParserFromMyBackend {
         try {
             final JSONObject baseJsonResponse = new JSONObject(jsonResponse);
             final JSONArray featureArray = baseJsonResponse.getJSONArray("list");
+//            TODO Move to constans city, coontry and etc.
             final String city = baseJsonResponse.getString("city");
             final String country = baseJsonResponse.getString("country");
             for (int i = 0; i < featureArray.length(); i++) {
                 final JSONObject firstProperitis = featureArray.getJSONObject(i);
                 final String date = firstProperitis.getString("date");
+//                TODO format kelvin here not in adapter.
                 final double tempInKelvin = firstProperitis.getDouble("temp");
                 final String weatherMain = firstProperitis.getString("weatherMain");
                 forecasts.add(new Weather(date, weatherMain, tempInKelvin, country, city));

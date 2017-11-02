@@ -13,6 +13,7 @@ import android.widget.Spinner;
 
 public class CityChoseScreenFragment extends VisibleFragment {
 
+//    TODO Can be removed
     private Spinner mSpinner;
 
     @Nullable

@@ -1,4 +1,5 @@
 <resources>
+    <!--TODO rename to one style-->
     <string name="app_name">Weather Project</string>
     <string name="get_the_weather">Get The Weather</string>
     <string name="titleToDialog">New update App</string>

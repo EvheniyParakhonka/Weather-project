@@ -36,6 +36,7 @@ public class WeatherAdapter extends RecyclerView.Adapter<WeatherAdapter.WeatherH
         return mWeathers.size();
     }
 
+//TODO Create interface and put into parameters or context
    public WeatherAdapter(final WeatherListFragment pWeatherListFragment, final List<Weather> pWeathers) {
         mWeatherListFragment = pWeatherListFragment;
         mWeathers = pWeathers;

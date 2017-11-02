@@ -28,6 +28,7 @@ public abstract class VisibleFragment extends Fragment {
         getActivity().unregisterReceiver(mOnShowUpdate);
     }
 
+//    TODO Rename to mUpdateDialogReceiver
     private final BroadcastReceiver mOnShowUpdate = new BroadcastReceiver() {
 
         @Override

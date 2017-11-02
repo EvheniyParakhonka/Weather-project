@@ -8,6 +8,7 @@ class DaysGson {
     private List<WeatherMain> weather;
     private TempGson main;
 
+//    TODO Rename pDt_txt
     public DaysGson(final long pDt, final String pDt_txt, final List<WeatherMain> pWeather, final TempGson pMain) {
         dt = pDt;
         dt_txt = pDt_txt;

@@ -4,6 +4,7 @@ import android.app.IntentService;
 import android.content.Context;
 import android.content.Intent;
 import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.support.annotation.Nullable;
 
 import org.json.JSONArray;
@@ -34,6 +35,7 @@ public class ServiceToCheckUpdate extends IntentService {
 
         assert pIntent != null;
         final int versionApp = pIntent.getIntExtra("VERSION_APP", 0);
+
         if (isOnline()) {
             try {
                 final String response = mIClient.makeHttpRequest(BuildConfig.BASE_URL);
@@ -41,8 +43,8 @@ public class ServiceToCheckUpdate extends IntentService {
                 final JSONArray items = request.getJSONArray("items");
                 final JSONObject first = items.getJSONObject(0);
                 final int currentVersionApp = first.getInt("current_app_version");
-                if (versionApp != currentVersionApp) {
 
+                if (versionApp != currentVersionApp) {
                     sendBroadcast(new Intent(ACTION_SHOW_FORCE_UPDATE));
                 }else{
                     stopSelf();
@@ -57,7 +59,12 @@ public class ServiceToCheckUpdate extends IntentService {
         final ConnectivityManager cm =
                 (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
 
-        return cm.getActiveNetworkInfo() != null &&
-                cm.getActiveNetworkInfo().isConnectedOrConnecting();
+//        TODO create variable
+        if (cm == null) {
+            return false;
+        }
+        final NetworkInfo networkInfo = cm.getActiveNetworkInfo();
+
+        return networkInfo!= null && networkInfo.isConnectedOrConnecting();
     }
 }
