@@ -24,6 +24,6 @@ public interface IForecastLoader {
     interface IForecastLOaderListener {
         void onSuccess(ArrayList<Weather> pForecast);
 
-        void onError(final int errorCode);
+        void onError(final int pErrorCode);
     }
 }

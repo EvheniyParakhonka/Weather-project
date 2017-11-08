@@ -18,7 +18,7 @@ public class RequestFromOpenWeather extends Fragment {
 
     private static final String TAG = RequestFromOpenWeather.class.getSimpleName();
 
-    public List<Weather> createAsync(final String pCityID) {
+    public List<Weather> getWeatherFromOpenWeather(final String pCityID) {
         final IHttpClient iHttpClient = new HttpClient();
         final IJsonParser iJsonParse = new JsonParser();
         final String url = createURLRequestForOpenWeather(pCityID);
@@ -26,9 +26,9 @@ public class RequestFromOpenWeather extends Fragment {
 
         try {
             final String inputStream = iHttpClient.makeHttpRequest(url);
-            jsonResponse = iJsonParse.extractWeatherFromJson(inputStream);
-        } catch (final Exception pE) {
-            Log.e(TAG, pE.toString());
+            jsonResponse = iJsonParse.extractWeatherFromJson(inputStream, pCityID);
+        } catch (final Exception pException) {
+            Log.e(TAG, pException.toString());
         }
         final PostToMyBackend postToMyBackend = new PostToMyBackend();
         postToMyBackend.execute(jsonResponse);
@@ -44,6 +44,7 @@ public class RequestFromOpenWeather extends Fragment {
                 .appendPath("data")
                 .appendPath("2.5")
                 .appendPath("forecast")
+                .appendPath("daily")
                 .appendQueryParameter("q", pCityId)
                 .appendQueryParameter("APPID", "c47e6bde2548624a496fb7fc2b7efce2");
         return builder.build().toString();

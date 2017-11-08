@@ -8,25 +8,23 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 
+import piftik.github.com.weatherproject.utils.Constants;
 
 public class HttpClient implements IHttpClient {
 
     private static final String TAG = HttpClient.class.getSimpleName();
-    private static final int READ_TIMEOUT = 40000;
-    private static final int CONNECT_TIMEOUT = 15000;
-    private static final int RESPONSE_CODE_SUCCESS = 200;
     private final IReadFromStream mIReadFromStream = new ReadFromStream();
     private String mResponse;
 
     @Override
     public String makeHttpRequest(final String pUrl)  {
 
-//TODO remove m
-        final URL mUrl;
+
+        final URL url;
         try {
-            mUrl = new URL(pUrl);
-        } catch (final MalformedURLException exception) {
-            Log.e(TAG, exception.toString());
+            url = new URL(pUrl);
+        } catch (final MalformedURLException pException) {
+            Log.e(TAG, pException.toString());
 
             return null;
         }
@@ -34,13 +32,13 @@ public class HttpClient implements IHttpClient {
         HttpURLConnection urlConnection = null;
         final InputStream inputStream;
         try {
-            urlConnection = (HttpURLConnection) mUrl.openConnection();
+            urlConnection = (HttpURLConnection) url.openConnection();
             urlConnection.setRequestMethod("GET");
-            urlConnection.setReadTimeout(READ_TIMEOUT /* milliseconds */);
-            urlConnection.setConnectTimeout(CONNECT_TIMEOUT /* milliseconds */);
+            urlConnection.setReadTimeout(Constants.READ_TIMEOUT /* milliseconds */);
+            urlConnection.setConnectTimeout(Constants.CONNECT_TIMEOUT /* milliseconds */);
             urlConnection.connect();
 
-            if (urlConnection.getResponseCode() == RESPONSE_CODE_SUCCESS) {
+            if (urlConnection.getResponseCode() == Constants.RESPONSE_CODE_SUCCESS) {
                 inputStream = urlConnection.getInputStream();
                 mResponse = mIReadFromStream.readFromStream(inputStream);
 

@@ -5,20 +5,19 @@
               android:layout_height="match_parent"
               android:orientation="vertical">
 
-    <!--check styles-->
     <Spinner
 
         android:id="@+id/spiner_city"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/marginTopToButton"
+        android:layout_marginTop="@dimen/margin_top_to_button"
         android:textAlignment="center"/>
 
     <Button
         android:id="@+id/button_get_wether"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/marginTopToButton"
+        android:layout_marginTop="@dimen/margin_top_to_button"
         android:text="@string/get_the_weather"
         tools:text="Get The Weather"/>
 </LinearLayout>

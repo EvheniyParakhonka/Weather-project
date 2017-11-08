@@ -9,33 +9,33 @@ import android.support.v4.app.FragmentManager;
 
 import piftik.github.com.weatherproject.update.ServiceToCheckUpdate;
 import piftik.github.com.weatherproject.update.UpdateDialogFragment;
+import piftik.github.com.weatherproject.utils.Constants;
 
 public abstract class VisibleFragment extends Fragment {
-    private static final String UPDATE_DIALOG = "UpdateDialog";
-//    private static final String TAG = "VisibleFragment";
+
+
 
     @Override
     public void onStart() {
         super.onStart();
         final IntentFilter filter = new IntentFilter
                 (ServiceToCheckUpdate.ACTION_SHOW_FORCE_UPDATE);
-        getActivity().registerReceiver(mOnShowUpdate, filter);
+        getActivity().registerReceiver(mUpdateDialogReceiver, filter);
     }
 
     @Override
     public void onStop() {
         super.onStop();
-        getActivity().unregisterReceiver(mOnShowUpdate);
+        getActivity().unregisterReceiver(mUpdateDialogReceiver);
     }
 
-//    TODO Rename to mUpdateDialogReceiver
-    private final BroadcastReceiver mOnShowUpdate = new BroadcastReceiver() {
+    private final BroadcastReceiver mUpdateDialogReceiver = new BroadcastReceiver() {
 
         @Override
         public void onReceive(final Context context, final Intent intent) {
             final FragmentManager manager = getFragmentManager();
             final UpdateDialogFragment dialog = new UpdateDialogFragment();
-            dialog.show(manager, UPDATE_DIALOG);
+            dialog.show(manager, Constants.UPDATE_DIALOG);
 
         }
     };

@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 import piftik.github.com.weatherproject.Weather;
 
-public interface IGsonParserFromMyBackend {
+public interface IJsonParserFromMyBackend {
 
     ArrayList<Weather> extractWeatherFromJsonMyBackend(String pInputStream);
 

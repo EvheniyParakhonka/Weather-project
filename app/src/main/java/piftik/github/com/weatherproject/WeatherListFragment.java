@@ -27,10 +27,10 @@ public class WeatherListFragment extends VisibleFragment {
     private View mMProgress;
     private String mCityID;
 
-//    Code style
+
     @Override
-    public void onCreate(@Nullable final Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+    public void onCreate(@Nullable final Bundle pSavedInstanceState) {
+        super.onCreate(pSavedInstanceState);
 
         mForecastLoader = IForecastLoader.Impl.getInstance();
         mListener = new MyIForecastLOaderListener();
@@ -50,8 +50,8 @@ public class WeatherListFragment extends VisibleFragment {
 
     @Nullable
     @Override
-    public View onCreateView(final LayoutInflater inflater, @Nullable final ViewGroup container, @Nullable final Bundle savedInstanceState) {
-        final View view = inflater.inflate(R.layout.fragment_weather_list, container, false);
+    public View onCreateView(final LayoutInflater pInflater, @Nullable final ViewGroup pContainer, @Nullable final Bundle pSavedInstanceState) {
+        final View view = pInflater.inflate(R.layout.fragment_weather_list, pContainer, false);
 
         mWeatherRecyclerView = (RecyclerView) view.findViewById(R.id.weather_recycler_view);
         mWeatherRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
@@ -79,12 +79,12 @@ public class WeatherListFragment extends VisibleFragment {
         }
 
         @Override
-        public void onError(final int errorCode) {
+        public void onError(final int pErrorCode) {
             mUiHandler.post(new Runnable() {
 
                 @Override
                 public void run() {
-                    showEmptyView(errorCode);
+                    showEmptyView(pErrorCode);
                 }
             });
         }
@@ -102,8 +102,8 @@ public class WeatherListFragment extends VisibleFragment {
         mForecastLoader.removeListener(mListener);
     }
 
-    private void showEmptyView(final int errorCode) {
+    private void showEmptyView(final int pErrorCode) {
         mMProgress.setVisibility(View.GONE);
-        Toast.makeText(getContext(), "empty " + errorCode, Toast.LENGTH_LONG).show();
+        Toast.makeText(getContext(), "empty " + pErrorCode, Toast.LENGTH_LONG).show();
     }
 }

@@ -17,12 +17,10 @@ import java.util.List;
 
 import piftik.github.com.weatherproject.BuildConfig;
 import piftik.github.com.weatherproject.Weather;
+import piftik.github.com.weatherproject.utils.Constants;
 
 public class PostToMyBackend extends AsyncTask<ArrayList<Weather>, Void, Void> {
 
-//    TODO remove unused constans
-    private static final int READ_TIMEOUT = 10000;
-    private static final int CONNECT_TIMEOUT = 15000;
     private static final String TAG = PostToMyBackend.class.getSimpleName();
 
     private void postConnect(final List<Weather> pWeathers) {
@@ -55,19 +53,19 @@ public class PostToMyBackend extends AsyncTask<ArrayList<Weather>, Void, Void> {
 
     }
 
-//    TODO move city, country to constan
     private String createPostJson(final List<Weather> pWeathers) {
 
         final JSONObject first = new JSONObject();
         try {
-            first.put("city", pWeathers.get(0).getCity());
-            first.put("country", pWeathers.get(0).getCountry());
+            first.put(Constants.CITY_TO_PARSING, pWeathers.get(0).getCity());
+            first.put(Constants.COUNTRY_TO_PARSING, pWeathers.get(0).getCountry());
             final JSONArray jsonArray = new JSONArray();
 
             for (int i = 0; i < pWeathers.size(); i++) {
                 jsonArray.put(new JSONObject().put("date", pWeathers.get(i).getDate()).
                         put("weatherMain", pWeathers.get(i).getWeatherMain()).
-                        put("temp", pWeathers.get(i).getTemp()));
+                        put("tempMax", pWeathers.get(i).getTempMax()).
+                        put("tempMin", pWeathers.get(i).getTempMin()));
             }
             first.put("list", jsonArray);
         } catch (final JSONException pE) {

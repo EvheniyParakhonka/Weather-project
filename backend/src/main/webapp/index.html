@@ -60,7 +60,9 @@
                         <input type="text" class="form-control input-lg" placeholder="Weather Main"
                                id="weatherMainInput"/>
                         <input type="text" class="form-control input-lg" placeholder="Temp"
-                               id="tempInput"/>
+                               id="tempInputMin"/>
+                        <input type="text" class="form-control input-lg" placeholder="Temp"
+                               id="tempInputMax"/>
                         <input type="text" class="form-control input-lg" placeholder="City"
                                id="cityInput"/>
                         <input type="text" class="form-control input-lg" placeholder="Country"
@@ -99,7 +101,8 @@
       document.getElementById('helloButton').onclick = function() {
         var mDate = document.getElementById('dateInput').value;
         var mWeatherMain = document.getElementById('weatherMainInput').value;
-        var mTemp = document.getElementById('tempInput').value;
+        var mTempMin = document.getElementById('tempInputMin').value;
+        var mTempMax = document.getElementById('tempInputMax').value;
         var mCity = document.getElementById('cityInput').value;
         var mCountry = document.getElementById('countryInput').value;
         gapi.client.weatherApi.insertToSite({'mDate': mDate,'mWeatherMain': mWeatherMain,

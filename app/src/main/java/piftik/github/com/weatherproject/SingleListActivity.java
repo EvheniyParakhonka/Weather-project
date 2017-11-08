@@ -11,8 +11,8 @@ import piftik.github.com.weatherproject.update.ServiceToCheckUpdate;
 abstract class SingleListActivity extends FragmentActivity {
     protected abstract Fragment createFragment();
     @Override
-    protected void onCreate(final Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+    protected void onCreate(final Bundle pSavedInstanceState) {
+        super.onCreate(pSavedInstanceState);
         setContentView(R.layout.activity_weather_main);
 
         final FragmentManager fm = getSupportFragmentManager();

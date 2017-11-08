@@ -5,6 +5,6 @@ import java.util.ArrayList;
 import piftik.github.com.weatherproject.Weather;
 
 public interface IJsonParser {
-     ArrayList<Weather> extractWeatherFromJson(String pJsonrequest);
+     ArrayList<Weather> extractWeatherFromJson(final String pJsonrequest, String pCityId);
 
 }

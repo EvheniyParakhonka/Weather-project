@@ -1,5 +1,6 @@
 package piftik.github.com.weatherproject.backend;
 
+import android.annotation.SuppressLint;
 import android.os.AsyncTask;
 import android.support.v4.app.Fragment;
 import android.util.Log;
@@ -13,8 +14,9 @@ import piftik.github.com.weatherproject.Weather;
 import piftik.github.com.weatherproject.request.RequestFromOpenWeather;
 import piftik.github.com.weatherproject.request.http.HttpClient;
 import piftik.github.com.weatherproject.request.http.IHttpClient;
-import piftik.github.com.weatherproject.request.parser.GsonParserFromMyBackend;
-import piftik.github.com.weatherproject.request.parser.IGsonParserFromMyBackend;
+import piftik.github.com.weatherproject.request.parser.IJsonParserFromMyBackend;
+import piftik.github.com.weatherproject.request.parser.JsonParserFromMyBackend;
+import piftik.github.com.weatherproject.utils.Converter;
 
 public class RequestFromMyBackend extends Fragment implements IForecastLoader {
 
@@ -50,28 +52,32 @@ public class RequestFromMyBackend extends Fragment implements IForecastLoader {
         mAsyncEndpoint.execute(pCityId);
     }
 
+    @SuppressLint("StaticFieldLeak")
     private class AsyncEndpoint extends AsyncTask<String, Object, ArrayList<Weather>> {
 
         private String createURLRequest(final String pCityId) {
 
-            return BuildConfig.BASE_URL + pCityId;
+            return BuildConfig.BASE_URL + "/" + pCityId;
         }
 
         @Override
         protected ArrayList<Weather> doInBackground(final String... pCityId) {
             final IHttpClient iHttpClient = new HttpClient();
-            final IGsonParserFromMyBackend iGsonParser = new GsonParserFromMyBackend();
+            final IJsonParserFromMyBackend iJsonParser = new JsonParserFromMyBackend();
             final String url = createURLRequest(pCityId[0]);
 //            List<Weather> weathers = new ArrayList<>();
             ArrayList<Weather> jsonResponse = null;
             try {
-
                 final String inputStream = iHttpClient.makeHttpRequest(url);
+
                 if (inputStream == null) {
-                    final RequestFromOpenWeather requestFromOpenWeather = new RequestFromOpenWeather();
-                    jsonResponse =(ArrayList<Weather>) requestFromOpenWeather.createAsync(pCityId[0]);
+                    jsonResponse = requestFromOpenWeather(pCityId);
                 } else {
-                    jsonResponse = iGsonParser.extractWeatherFromJsonMyBackend(inputStream);
+                    jsonResponse = iJsonParser.extractWeatherFromJsonMyBackend(inputStream);
+                    final long timeNowToCheckUpgrade = System.currentTimeMillis();
+                    if(!jsonResponse.get(0).getDate().equals(Converter.convertUnixTimeToDays(timeNowToCheckUpgrade))){
+                        jsonResponse = requestFromOpenWeather(pCityId);
+                    }
                 }
             } catch (final Exception pE) {
                 Log.e(TAG, pE.toString());
@@ -91,6 +97,11 @@ public class RequestFromMyBackend extends Fragment implements IForecastLoader {
                 listener.onSuccess(pWeathers);
             }
         }
+    }
+
+    public ArrayList<Weather> requestFromOpenWeather(final String... pCityId){
+        final RequestFromOpenWeather requestFromOpenWeather = new RequestFromOpenWeather();
+        return (ArrayList<Weather>) requestFromOpenWeather.getWeatherFromOpenWeather(pCityId[0]);
     }
 
 }

@@ -51,17 +51,19 @@ public class Weather {
         return mList;
     }
 
-    static class Days {
+    private static class Days {
 
-        private double mTemp;
+        private String mTempMin;
+        private String mTempMax;
         private String mDate;
         private String mWeatherMain;
 
         public Days() {
         }
 
-        Days(final double mTemp, final String mDate, final String mWeatherMain) {
-            this.mTemp = mTemp;
+        Days( final String pTempMin, final String pTempMax, final String mDate, final String mWeatherMain) {
+            this.mTempMin = pTempMin;
+            this.mTempMax = pTempMax;
             this.mDate = mDate;
             this.mWeatherMain = mWeatherMain;
         }
@@ -74,12 +76,20 @@ public class Weather {
             this.mWeatherMain = mWeatherMain;
         }
 
-        public void setTemp(final double mTemp) {
-            this.mTemp = mTemp;
+        public String getTempMin() {
+            return mTempMin;
         }
 
-        public double getTemp() {
-            return mTemp;
+        public void setTempMin(final String pTempMin) {
+            mTempMin = pTempMin;
+        }
+
+        public String getTempMax() {
+            return mTempMax;
+        }
+
+        public void setTempMax(final String pTempMax) {
+            mTempMax = pTempMax;
         }
 
         public String getDate() {

@@ -4,5 +4,5 @@ import java.io.IOException;
 import java.io.InputStream;
 
 interface IReadFromStream {
-    String readFromStream(InputStream inputStream) throws IOException;
+    String readFromStream(InputStream pInputStream) throws IOException;
 }

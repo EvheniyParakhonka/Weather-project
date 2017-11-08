@@ -13,16 +13,12 @@ import android.widget.Spinner;
 
 public class CityChoseScreenFragment extends VisibleFragment {
 
-//    TODO Can be removed
-    private Spinner mSpinner;
-
     @Nullable
     @Override
-    public View onCreateView(final LayoutInflater inflater, @Nullable final ViewGroup container, @Nullable final Bundle savedInstanceState) {
-        final View view = inflater.inflate(R.layout.city_chose_screen, container, false);
+    public View onCreateView(final LayoutInflater pInflater, @Nullable final ViewGroup pContainer, @Nullable final Bundle pSavedInstanceState) {
+        final View view = pInflater.inflate(R.layout.city_chose_screen, pContainer, false);
 
-
-        mSpinner = (Spinner) view.findViewById(R.id.spiner_city);
+        final Spinner mSpinner = (Spinner) view.findViewById(R.id.spiner_city);
         final Button getWeatherButton = (Button) view.findViewById(R.id.button_get_wether);
 
         final ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getContext(),
@@ -31,6 +27,7 @@ public class CityChoseScreenFragment extends VisibleFragment {
         mSpinner.setAdapter(adapter);
 
         getWeatherButton.setOnClickListener(new View.OnClickListener() {
+
             @Override
             public void onClick(final View v) {
                 final String cityID = mSpinner.getSelectedItem().toString();

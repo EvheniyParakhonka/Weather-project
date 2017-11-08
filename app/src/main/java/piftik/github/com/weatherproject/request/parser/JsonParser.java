@@ -9,7 +9,8 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 
 import piftik.github.com.weatherproject.Weather;
-
+import piftik.github.com.weatherproject.utils.Constants;
+import piftik.github.com.weatherproject.utils.Converter;
 
 public class JsonParser implements IJsonParser {
 
@@ -19,7 +20,7 @@ public class JsonParser implements IJsonParser {
     }
 
     @Override
-    public ArrayList<Weather> extractWeatherFromJson(final String pJsonRequest) {
+    public ArrayList<Weather> extractWeatherFromJson(final String pJsonRequest, final String pCityId) {
         final ArrayList<Weather> forecasts = new ArrayList<>();
 
 //        String jsonResponse = null;
@@ -30,27 +31,28 @@ public class JsonParser implements IJsonParser {
         try {
             final JSONObject baseJsonResponse = new JSONObject(pJsonRequest);
             final JSONArray featureArray = baseJsonResponse.getJSONArray("list");
-            final JSONObject placeProperitis = baseJsonResponse.getJSONObject("city");
+            final JSONObject placeProperitis = baseJsonResponse.getJSONObject(Constants.CITY_TO_PARSING);
 
             for (int i = 0; i < featureArray.length(); i++) {
                 final JSONObject firstProperitis = featureArray.getJSONObject(i);
-                final JSONObject main = firstProperitis.getJSONObject("main");
+                final JSONObject temp = firstProperitis.getJSONObject("temp");
                 final JSONArray weather = firstProperitis.getJSONArray("weather");
                 final JSONObject mainWeather = weather.getJSONObject(0);
 
-
-                final double tempInKelvin = main.getDouble("temp");
-                final String dataText = firstProperitis.getString("dt_txt");
+                final double tempToDayMax = temp.getDouble("max");
+                final double tempToDayMin = temp.getDouble("min");
+                final long data = firstProperitis.getLong("dt");
                 final String weatherMain = mainWeather.getString("main");
 
 
                 final String placeOfCit = placeProperitis.getString("name");
-                final String country = placeProperitis.getString("country");
+                final String country = placeProperitis.getString(Constants.COUNTRY_TO_PARSING);
 
-                forecasts.add(new Weather(dataText, weatherMain, tempInKelvin, country, placeOfCit));
+                forecasts.add(new Weather(Converter.convertUnixTimeToDays(data), weatherMain, Converter.convertTemperatureToCelsius(tempToDayMin),
+                        Converter.convertTemperatureToCelsius(tempToDayMax), country, pCityId));
             }
-        } catch (final JSONException pE) {
-            Log.e(TAG, "Error with parsing " + pE);
+        } catch (final JSONException pException) {
+            Log.e(TAG, "Error with parsing " + pException);
         }
         return forecasts;
     }

@@ -16,10 +16,10 @@ public class UpdateDialogFragment extends DialogFragment {
 
     @NonNull
     @Override
-    public Dialog onCreateDialog(final Bundle savedInstanceState) {
+    public Dialog onCreateDialog(final Bundle pSavedInstanceState) {
         return new AlertDialog.Builder(getActivity())
-                .setTitle(R.string.titleToDialog)
-                .setMessage(R.string.messageToUpdateDialog)
+                .setTitle(R.string.title_to_dialog)
+                .setMessage(R.string.message_to_update_dialog)
                 .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
 
                     @Override

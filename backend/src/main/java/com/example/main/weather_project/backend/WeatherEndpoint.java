@@ -35,7 +35,7 @@ import static com.googlecode.objectify.ObjectifyService.ofy;
                 ownerName = "backend.weather_project.main.example.com"
         )
 )
-class WeatherEndpoint {
+public class WeatherEndpoint {
 
     private static final Logger logger = Logger.getLogger(WeatherEndpoint.class.getName());
 
@@ -66,7 +66,6 @@ class WeatherEndpoint {
         return weather;
     }
 
-
     /**
      * Inserts a new {@code Weather}.
      */
@@ -86,19 +85,6 @@ class WeatherEndpoint {
         return ofy().load().entity(weather).now();
     }
 
-
-@ApiMethod(
-        name = "insertToSite"
-)
-public void insertToSite(@Named("mDate") final String mDate, @Named("mWeatherMain") final String mWeatherMain,
-                         @Named("mTemp") final double mTemp, @Named("mCity") final String mCity,
-                         @Named("mCountry") final String mCountry){
-    final List<Weather.Days> mList = new ArrayList<>();
-    mList.add(new Weather.Days(mTemp, mDate,mWeatherMain));
-    final Weather weather = new Weather(mCity,mCountry, mList);
-    ofy().save().entity(weather).now();
-    logger.info("Created User.");
-}
     /**
      * Updates an existing {@code Weather}.
      *
@@ -113,7 +99,7 @@ public void insertToSite(@Named("mDate") final String mDate, @Named("mWeatherMai
             path = "weather/{mCity}",
             httpMethod = ApiMethod.HttpMethod.PUT)
     public Weather update(@Named("mCity") final String mCity, final Weather weather) throws NotFoundException {
-        // TODO: You should validate your ID parameter against your resource's ID here.
+
         checkExists(mCity);
         ofy().save().entity(weather).now();
         logger.info("Updated Weather: " + weather);
@@ -165,7 +151,7 @@ public void insertToSite(@Named("mDate") final String mDate, @Named("mWeatherMai
     private void checkExists(final String mCity) throws NotFoundException {
         try {
             ofy().load().type(Weather.class).id(mCity).safe();
-        } catch (final com.googlecode.objectify.NotFoundException e) {
+        } catch (final com.googlecode.objectify.NotFoundException pE) {
             throw new NotFoundException("Could not find Weather with ID: " + mCity);
         }
     }

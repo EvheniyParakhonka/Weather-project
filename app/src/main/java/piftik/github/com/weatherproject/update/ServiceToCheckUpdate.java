@@ -39,6 +39,8 @@ public class ServiceToCheckUpdate extends IntentService {
         if (isOnline()) {
             try {
                 final String response = mIClient.makeHttpRequest(BuildConfig.BASE_URL);
+
+                if (response != null){
                 final JSONObject request = new JSONObject(response);
                 final JSONArray items = request.getJSONArray("items");
                 final JSONObject first = items.getJSONObject(0);
@@ -47,6 +49,8 @@ public class ServiceToCheckUpdate extends IntentService {
                 if (versionApp != currentVersionApp) {
                     sendBroadcast(new Intent(ACTION_SHOW_FORCE_UPDATE));
                 }else{
+                    stopSelf();
+                }}else {
                     stopSelf();
                 }
             } catch (final JSONException pE) {
@@ -59,7 +63,6 @@ public class ServiceToCheckUpdate extends IntentService {
         final ConnectivityManager cm =
                 (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
 
-//        TODO create variable
         if (cm == null) {
             return false;
         }
