@@ -9,8 +9,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import piftik.github.com.weatherproject.BuildConfig;
-import piftik.github.com.weatherproject.IForecastLoader;
-import piftik.github.com.weatherproject.Weather;
+import piftik.github.com.weatherproject.request.IForecastLoader;
+import piftik.github.com.weatherproject.models.Weather;
 import piftik.github.com.weatherproject.request.RequestFromOpenWeather;
 import piftik.github.com.weatherproject.request.http.HttpClient;
 import piftik.github.com.weatherproject.request.http.IHttpClient;

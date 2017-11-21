@@ -8,9 +8,8 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 
-import piftik.github.com.weatherproject.Weather;
+import piftik.github.com.weatherproject.models.Weather;
 import piftik.github.com.weatherproject.utils.Constants;
-import piftik.github.com.weatherproject.utils.Converter;
 
 public class JsonParserFromMyBackend implements IJsonParserFromMyBackend {
 

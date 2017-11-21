@@ -9,4 +9,5 @@ public final class Constants {
     public static final String CITY_TO_PARSING = "city";
     public static final String COUNTRY_TO_PARSING = "country";
     public static final String UPDATE_DIALOG = "UpdateDialog";
+    public static final String BUNDLE_CITY_ID = "CITY_ID";
 }

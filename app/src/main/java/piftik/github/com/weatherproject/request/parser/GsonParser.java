@@ -7,7 +7,7 @@
 //import java.io.Reader;
 //import java.util.ArrayList;
 //
-//import piftik.github.com.weatherproject.Weather;
+//import piftik.github.com.weatherproject.models.Weather;
 //import piftik.github.com.weatherproject.request.http.IReadFromStream;
 //import piftik.github.com.weatherproject.request.http.ReadFromStream;
 //import piftik.github.com.weatherproject.request.parser.gson_parsing.ResponsGson;

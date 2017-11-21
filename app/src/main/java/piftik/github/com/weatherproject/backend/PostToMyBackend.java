@@ -16,7 +16,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import piftik.github.com.weatherproject.BuildConfig;
-import piftik.github.com.weatherproject.Weather;
+import piftik.github.com.weatherproject.models.Weather;
 import piftik.github.com.weatherproject.utils.Constants;
 
 public class PostToMyBackend extends AsyncTask<ArrayList<Weather>, Void, Void> {

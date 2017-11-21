@@ -1,4 +1,4 @@
-package piftik.github.com.weatherproject.recycler;
+package piftik.github.com.weatherproject.adapter;
 
 import android.annotation.SuppressLint;
 import android.support.v7.widget.RecyclerView;
@@ -10,8 +10,8 @@ import android.widget.TextView;
 import java.util.List;
 
 import piftik.github.com.weatherproject.R;
-import piftik.github.com.weatherproject.Weather;
 import piftik.github.com.weatherproject.WeatherListFragment;
+import piftik.github.com.weatherproject.models.Weather;
 
 public class WeatherAdapter extends RecyclerView.Adapter<WeatherAdapter.WeatherHolder> {
 
@@ -36,8 +36,8 @@ public class WeatherAdapter extends RecyclerView.Adapter<WeatherAdapter.WeatherH
         return mWeathers.size();
     }
 
-//TODO Create interface and put into parameters or context
-   public WeatherAdapter(final WeatherListFragment pWeatherListFragment, final List<Weather> pWeathers) {
+    //TODO Create interface and put into parameters or context
+    public WeatherAdapter(final WeatherListFragment pWeatherListFragment, final List<Weather> pWeathers) {
         mWeatherListFragment = pWeatherListFragment;
         mWeathers = pWeathers;
     }
@@ -45,23 +45,28 @@ public class WeatherAdapter extends RecyclerView.Adapter<WeatherAdapter.WeatherH
     static class WeatherHolder extends RecyclerView.ViewHolder {
         private final TextView mDateView;
         private final TextView mTemperatureMin;
+        private final TextView mTemperatureMax;
         private final TextView mPlace;
         private Weather mWeather;
 
         WeatherHolder(final View pView) {
             super(pView);
             mDateView = (TextView) pView.findViewById(R.id
-                    .date_time_text_view);
-            mTemperatureMin = (TextView) pView.findViewById(R.id.temperature_text_view);
+                .date_time_text_view);
+            mTemperatureMin = (TextView) pView.findViewById(R.id.temperature_text_view_min);
+            mTemperatureMax = (TextView) pView.findViewById(R.id.temperature_text_view_max);
             mPlace = (TextView) pView.findViewById(R.id.weather_main_text_view);
+
         }
 
         @SuppressLint("SetTextI18n")
         void bindWeather(final Weather pWeather) {
             mWeather = pWeather;
             mDateView.setText(mWeather.getDate());
-            final String temp = String.valueOf(mWeather.getTempMin());
-            mTemperatureMin.setText(temp + " \u00B0" + "C");
+            final String tempMin = String.valueOf(mWeather.getTempMin());
+            mTemperatureMin.setText(tempMin + " \u00B0" + "C");
+            final String tempMax = String.valueOf((mWeather.getTempMax()));
+            mTemperatureMax.setText(tempMax + " \u00B0" + "C");
             mPlace.setText(mWeather.getCity() + ", " + mWeather.getCountry());
         }
     }

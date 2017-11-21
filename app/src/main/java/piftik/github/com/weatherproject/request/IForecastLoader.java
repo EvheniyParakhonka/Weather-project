@@ -1,8 +1,9 @@
-package piftik.github.com.weatherproject;
+package piftik.github.com.weatherproject.request;
 
 import java.util.ArrayList;
 
 import piftik.github.com.weatherproject.backend.RequestFromMyBackend;
+import piftik.github.com.weatherproject.models.Weather;
 
 public interface IForecastLoader {
 //    O is too big
@@ -15,7 +16,7 @@ public interface IForecastLoader {
 //    void getForecastForDay(final long pCityId, final int pDays);
 
     final class Impl {
-        static IForecastLoader getInstance() {
+       public static IForecastLoader getInstance() {
             return new RequestFromMyBackend();
         }
 

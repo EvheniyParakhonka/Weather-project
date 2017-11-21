@@ -1,4 +1,4 @@
-package piftik.github.com.weatherproject;
+package piftik.github.com.weatherproject.models;
 
 public class Weather {
 
@@ -9,7 +9,7 @@ public class Weather {
     private final String mCountry;
     private final String mCity;
 
-    public Weather(final String pDate, final String pWeatherMain, final double pTempMin, final double pTempMax, final String pCountry, final String pCity) {
+    public  Weather(final String pDate, final String pWeatherMain, final double pTempMin, final double pTempMax, final String pCountry, final String pCity) {
         mDate = pDate;
         mWeatherMain = pWeatherMain;
         mTempMin = pTempMin;

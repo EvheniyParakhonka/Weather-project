@@ -7,7 +7,7 @@ import android.util.Log;
 import java.util.ArrayList;
 import java.util.List;
 
-import piftik.github.com.weatherproject.Weather;
+import piftik.github.com.weatherproject.models.Weather;
 import piftik.github.com.weatherproject.backend.PostToMyBackend;
 import piftik.github.com.weatherproject.request.http.HttpClient;
 import piftik.github.com.weatherproject.request.http.IHttpClient;
