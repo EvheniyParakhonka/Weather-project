@@ -13,9 +13,19 @@ import piftik.github.com.weatherproject.update.ServiceToCheckUpdate;
 
 public class WeatherListMainActivity extends FragmentActivity {
         @SuppressLint("StaticFieldLeak")
-    private  static ViewPager mViewPager;
+    private static ViewPager mViewPager;
     private ViewPagerAdapter mPagerAdapter;
-    Fragment mFragment;
+    private Fragment mFragment;
+
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        final Intent intent = new Intent(this, ServiceToCheckUpdate.class);
+        intent.addFlags(Intent.FLAG_FROM_BACKGROUND);
+        intent.putExtra("VERSION_APP", BuildConfig.VERSION_CODE);
+        startService(intent);
+    }
 
 
     @Override
@@ -30,40 +40,36 @@ public class WeatherListMainActivity extends FragmentActivity {
         addFragmentToViewPager();
     }
 
-    protected void createFragment(final Fragment pFragment) {
+    void createFragment(final Fragment pFragment) {
         mFragment = pFragment;
         addFragmentToViewPager();
     }
 
+    public void replace(final String pCityId) {
+        final Fragment fragment = WeatherListFragment.newInstance(pCityId);
+        getViewPagerAdapter().replace(fragment, visiblePageNowPosition());
+    }
 
-    public void addFragmentToViewPager() {
+    public void remove() {
+
+        getViewPagerAdapter().removeItemFromFragment(visiblePageNowPosition());
+    }
+
+    private void addFragmentToViewPager() {
 
         if (mFragment == null) {
-            mPagerAdapter.addFragment(new WeatherListFragment());
+            mPagerAdapter.addFragment(new CityChoseScreenFragment());
         } else {
-            ((ViewPagerAdapter) mViewPager.getAdapter()).addFragment(mFragment);
-
+            getViewPagerAdapter().addFragment(mFragment);
         }
     }
 
-
-    @Override
-    protected void onStop() {
-        super.onStop();
+    private int visiblePageNowPosition() {
+        return mViewPager.getCurrentItem();
     }
 
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        final Intent intent = new Intent(this, ServiceToCheckUpdate.class);
-        intent.addFlags(Intent.FLAG_FROM_BACKGROUND);
-        intent.putExtra("VERSION_APP", BuildConfig.VERSION_CODE);
-        startService(intent);
+    private ViewPagerAdapter getViewPagerAdapter() {
+        return ((ViewPagerAdapter) mViewPager.getAdapter());
     }
 
 }

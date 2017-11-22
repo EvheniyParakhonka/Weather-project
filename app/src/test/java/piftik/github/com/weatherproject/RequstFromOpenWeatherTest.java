@@ -1,26 +1,16 @@
 package piftik.github.com.weatherproject;
 
 import org.junit.Before;
-import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.ArgumentCaptor;
 import org.robolectric.RobolectricTestRunner;
 import org.robolectric.annotation.Config;
 
 import java.io.InputStream;
-import java.util.List;
 
 import piftik.github.com.weatherproject.mocks.Mocks;
 import piftik.github.com.weatherproject.request.http.IHttpClient;
-import piftik.github.com.weatherproject.request.http.ReadFromStream;
-import piftik.github.com.weatherproject.request.parser.IJsonParser;
-import piftik.github.com.weatherproject.request.parser.JsonParser;
 
-import static junit.framework.Assert.assertEquals;
-import static org.mockito.Matchers.anyString;
-import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.verify;
 
 @RunWith(RobolectricTestRunner.class)
 @Config(

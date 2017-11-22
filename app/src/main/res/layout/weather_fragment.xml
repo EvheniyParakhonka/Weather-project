@@ -3,7 +3,7 @@
               xmlns:tools="http://schemas.android.com/tools"
               android:layout_width="wrap_content"
               android:layout_height="wrap_content"
-              android:layout_marginTop="@dimen/margin_top_for_line_text_view"
+              android:layout_margin="@dimen/margin_top_for_line_text_view"
               android:orientation="vertical">
 
     <LinearLayout

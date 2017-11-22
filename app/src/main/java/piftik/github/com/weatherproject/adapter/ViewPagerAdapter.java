@@ -2,10 +2,7 @@ package piftik.github.com.weatherproject.adapter;
 
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.app.FragmentStatePagerAdapter;
-import android.support.v4.view.ViewPager;
-import android.util.Log;
 import android.view.ViewGroup;
 
 import java.util.ArrayList;
@@ -15,13 +12,12 @@ public class ViewPagerAdapter extends FragmentStatePagerAdapter {
     private static final String TAG = ViewPagerAdapter.class.getSimpleName();
     private List<Fragment> mFragments = new ArrayList<>();
     private FragmentManager mFragmentManager;
-    private Fragment.SavedState mSavedState;
+    private Fragment mFragmentToReplace;
+    private ViewGroup mViewGroup;
+    private int mPosition;
 
-    public ViewPagerAdapter(final FragmentManager pFragmentManager, final List<Fragment> pFragments) {
-        super(pFragmentManager);
-        this.mFragmentManager = pFragmentManager;
-        this.mFragments = pFragments;
-    }
+
+
 
     public ViewPagerAdapter(final FragmentManager pFragmentManager) {
         super(pFragmentManager);
@@ -34,14 +30,17 @@ public class ViewPagerAdapter extends FragmentStatePagerAdapter {
     }
 
     @Override
-    public int getItemPosition(Object object) {
-        int index = mFragments.indexOf(object);
-        if (index == -1) {
-            return POSITION_NONE;
+    public int getItemPosition(final Object pObject) {
+
+        if (pObject.equals(mFragmentToReplace)) {
+            return super.getItemPosition(pObject);
         } else {
-            return index;
+            mFragments.set(mPosition, mFragmentToReplace);
+            return POSITION_NONE;
         }
     }
+
+
 
     @Override
     public int getCount() {
@@ -61,32 +60,17 @@ public class ViewPagerAdapter extends FragmentStatePagerAdapter {
         notifyDataSetChanged();
     }
 
-    public void removeFragments() {
-        try {
-            final List<Fragment> newList = new ArrayList<>();
-            final Fragment general = mFragments.get(0);
-            newList.add(general);
-            this.mFragments.clear();
-            this.mFragments = new ArrayList<>();
-            this.mFragments = newList;
-            notifyDataSetChanged();
-        } catch (final Exception pE) {
-            Log.e(TAG, "removeFragments: " + pE);
-        }
+
+    public void replace(final Fragment pFragment, final int pPosition) {
+        mPosition = pPosition;
+        mFragmentToReplace = pFragment;
+        notifyDataSetChanged();
     }
 
-    public void removeItemFromFragment(final ViewGroup pViewGroup, final int pPosition, final Object pObject) {
-        try {
-            try {
-                pViewGroup.removeViewAt(pPosition);
-                ((ViewPager) pViewGroup).setCurrentItem(pPosition - 1);
-            } catch (final Exception pE) {
-                Log.e(TAG, "removeItemFromFragment: " + pE);
-            }
-            notifyDataSetChanged();
-        } catch (final Exception pE) {
-            Log.e(TAG, "removeItemFromFragment: " + pE);
-        }
+    public void removeItemFromFragment(final int pPosition) {
+        mFragments.remove(pPosition);
+        notifyDataSetChanged();
+
     }
 }
 

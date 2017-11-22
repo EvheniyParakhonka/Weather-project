@@ -1,11 +1,13 @@
 package piftik.github.com.weatherproject;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -40,18 +42,21 @@ public class WeatherListFragment extends VisibleFragment {
     private TextView mDateToday;
     private TextView mWeatherMainToday;
     private ImageView mImageViewSmallToday;
-
-    public String getCityIDResult() {
-        return mCityIDResult;
+    public static Fragment  newInstance(final String pCityID){
+        final Bundle bundle = new Bundle();
+        bundle.putString(Constants.BUNDLE_CITY_ID, pCityID);
+        final Fragment weatherList = new WeatherListFragment();
+        weatherList.setArguments(bundle);
+        return weatherList;
     }
 
     @Override
     public void onCreate(@Nullable final Bundle pSavedInstanceState) {
         super.onCreate(pSavedInstanceState);
         setRetainInstance(true);
+
         mForecastLoader = IForecastLoader.Impl.getInstance();
         mListener = new MyIForecastLOaderListener();
-        mWeatherListMainActivity = new WeatherListMainActivity();
         mUiHandler = new Handler(Looper.getMainLooper());
         final Bundle bundle = getArguments();
 
@@ -64,7 +69,7 @@ public class WeatherListFragment extends VisibleFragment {
 
     }
 
-    @Override
+
     public void onActivityResult(final int pRequestCode, final int pResultCode, final Intent pData) {
         super.onActivityResult(pRequestCode, pResultCode, pData);
 
@@ -76,8 +81,8 @@ public class WeatherListFragment extends VisibleFragment {
             mCityID = pData.getStringExtra(Constants.BUNDLE_CITY_ID);
             getWeatherAsync(mCityID);
         } else {
-            startNewPage();
             mCityID = pData.getStringExtra(Constants.BUNDLE_CITY_ID);
+//            super.startNewPage(mCityID);
 
         }
     }
@@ -105,30 +110,22 @@ public class WeatherListFragment extends VisibleFragment {
         mImageViewSmallToday = (ImageView) view.findViewById(R.id.small_image_weather_today);
         mWeatherRecyclerView = (RecyclerView) view.findViewById(R.id.weather_recycler_view);
         mWeatherRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false));
+        mWeatherRecyclerView.addItemDecoration(new DividerItemDecoration(getActivity(), DividerItemDecoration.HORIZONTAL));
+
         mMProgress = view.findViewById(R.id.progress);
         mButton = view.findViewById(R.id.added_new_fragment_button);
         mMProgress.setVisibility(View.VISIBLE);
         mButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(final View pView) {
-                startCityChosePage();
+                WeatherListFragment.super.startNewPage();
             }
         });
 
         return view;
     }
 
-    private void startNewPage() {
 
-
-        final Fragment fragment = new WeatherListFragment();
-        final Bundle bundle = new Bundle();
-        bundle.putString(Constants.BUNDLE_CITY_ID, mCityID);
-        fragment.setArguments(bundle);
-        mWeatherListMainActivity.createFragment(fragment);
-
-
-    }
 
     private void startCityChosePage() {
         startActivityForResult(new Intent(getContext(), CityChoseScreenFragment.class), 1);
@@ -137,6 +134,7 @@ public class WeatherListFragment extends VisibleFragment {
 
     private class MyIForecastLOaderListener implements IForecastLoader.IForecastLOaderListener {
 
+        @SuppressLint("SetTextI18n")
         @Override
         public void onSuccess(final ArrayList<Weather> pWeathers) {
 

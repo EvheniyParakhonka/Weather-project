@@ -29,6 +29,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:clickable="true"
-        android:src="@android:drawable/ic_input_add"/>
+        android:src="@android:drawable/ic_input_add"
+        android:focusable="true"/>
 
 </RelativeLayout>

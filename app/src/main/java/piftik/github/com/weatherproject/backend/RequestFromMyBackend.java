@@ -99,7 +99,7 @@ public class RequestFromMyBackend extends Fragment implements IForecastLoader {
         }
     }
 
-    public ArrayList<Weather> requestFromOpenWeather(final String... pCityId){
+    private ArrayList<Weather> requestFromOpenWeather(final String... pCityId){
         final RequestFromOpenWeather requestFromOpenWeather = new RequestFromOpenWeather();
         return (ArrayList<Weather>) requestFromOpenWeather.getWeatherFromOpenWeather(pCityId[0]);
     }
