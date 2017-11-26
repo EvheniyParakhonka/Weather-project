@@ -1,7 +1,9 @@
 package piftik.github.com.weatherproject;
 
+
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,8 +11,17 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
 
-public class CityChoseScreenFragment extends VisibleFragment {
+public class CityChoseScreenFragment extends Fragment {
 
+    private OnNewPageCityChosseAddListnener mOnNewLocationSelectedListnener;
+
+    public static CityChoseScreenFragment newInstance() {
+        return new CityChoseScreenFragment();
+    }
+
+    public void setOnNewPageCityChooseAdd(final OnNewPageCityChosseAddListnener pOnNewLocationSelectedListnener) {
+        mOnNewLocationSelectedListnener = pOnNewLocationSelectedListnener;
+    }
 
     @Nullable
 
@@ -25,17 +36,22 @@ public class CityChoseScreenFragment extends VisibleFragment {
             R.array.city, android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         mSpinner.setAdapter(adapter);
+
         getWeatherButton.setOnClickListener(new View.OnClickListener() {
-
             @Override
-            public void onClick(final View v) {
-                final String cityID = mSpinner.getSelectedItem().toString();
-                CityChoseScreenFragment.super.replace(cityID);
-
+            public void onClick(final View pView) {
+                if (mOnNewLocationSelectedListnener != null) {
+                    mOnNewLocationSelectedListnener.onNewPageCityChosseAdd(mSpinner.getSelectedItem().toString());
+                }
             }
         });
-
         return view;
+
+
     }
 
+
+    public interface OnNewPageCityChosseAddListnener {
+        void onNewPageCityChosseAdd(String pCityId);
+    }
 }

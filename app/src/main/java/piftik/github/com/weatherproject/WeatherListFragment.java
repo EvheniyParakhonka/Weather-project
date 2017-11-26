@@ -1,7 +1,7 @@
 package piftik.github.com.weatherproject;
 
 import android.annotation.SuppressLint;
-import android.content.Intent;
+import android.content.Context;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
@@ -20,14 +20,15 @@ import android.widget.Toast;
 
 import java.util.ArrayList;
 
-import piftik.github.com.weatherproject.adapter.WeatherAdapter;
+import piftik.github.com.weatherproject.adapter.WeatherAdapterRecyclerView;
 import piftik.github.com.weatherproject.models.Weather;
 import piftik.github.com.weatherproject.request.IForecastLoader;
 import piftik.github.com.weatherproject.utils.Constants;
+import piftik.github.com.weatherproject.utils.GetSmallImage;
 
 import static android.content.ContentValues.TAG;
 
-public class WeatherListFragment extends VisibleFragment {
+public class WeatherListFragment extends Fragment {
 
     private RecyclerView mWeatherRecyclerView;
     private IForecastLoader mForecastLoader;
@@ -42,10 +43,16 @@ public class WeatherListFragment extends VisibleFragment {
     private TextView mDateToday;
     private TextView mWeatherMainToday;
     private ImageView mImageViewSmallToday;
-    public static Fragment  newInstance(final String pCityID){
+    private OnNewLocationSelectedListnener mOnNewLocationSelectedListnener;
+
+    public void setOnNewLocationSelectedListnener(final OnNewLocationSelectedListnener pOnNewLocationSelectedListnener) {
+        mOnNewLocationSelectedListnener = pOnNewLocationSelectedListnener;
+    }
+
+    public static WeatherListFragment newInstance(final String pCityID) {
         final Bundle bundle = new Bundle();
         bundle.putString(Constants.BUNDLE_CITY_ID, pCityID);
-        final Fragment weatherList = new WeatherListFragment();
+        final WeatherListFragment weatherList = new WeatherListFragment();
         weatherList.setArguments(bundle);
         return weatherList;
     }
@@ -62,30 +69,10 @@ public class WeatherListFragment extends VisibleFragment {
 
         if (bundle != null) {
             mCityID = bundle.getString(Constants.BUNDLE_CITY_ID);
-        } else {
-            startCityChosePage();
         }
-
 
     }
 
-
-    public void onActivityResult(final int pRequestCode, final int pResultCode, final Intent pData) {
-        super.onActivityResult(pRequestCode, pResultCode, pData);
-
-        if (pData == null) {
-            return;
-        }
-
-        if (mCityID == null) {
-            mCityID = pData.getStringExtra(Constants.BUNDLE_CITY_ID);
-            getWeatherAsync(mCityID);
-        } else {
-            mCityID = pData.getStringExtra(Constants.BUNDLE_CITY_ID);
-//            super.startNewPage(mCityID);
-
-        }
-    }
 
     @Override
     public void onResume() {
@@ -115,21 +102,12 @@ public class WeatherListFragment extends VisibleFragment {
         mMProgress = view.findViewById(R.id.progress);
         mButton = view.findViewById(R.id.added_new_fragment_button);
         mMProgress.setVisibility(View.VISIBLE);
-        mButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(final View pView) {
-                WeatherListFragment.super.startNewPage();
-            }
-        });
+        mButton.setOnClickListener(new OnAddNewLocationClickListnener());
 
         return view;
     }
 
 
-
-    private void startCityChosePage() {
-        startActivityForResult(new Intent(getContext(), CityChoseScreenFragment.class), 1);
-    }
 
 
     private class MyIForecastLOaderListener implements IForecastLoader.IForecastLOaderListener {
@@ -142,13 +120,14 @@ public class WeatherListFragment extends VisibleFragment {
             if (pWeathers != null && !pWeathers.isEmpty()) {
                 for (final Weather weather : pWeathers) {
                     Log.d(TAG, "onSuccess: " + weather.getWeatherMain());
-                    final WeatherAdapter weatherAdapter = new WeatherAdapter(WeatherListFragment.this, pWeathers);
+                    final WeatherAdapterRecyclerView weatherAdapter = new WeatherAdapterRecyclerView(getContext(), pWeathers);
                     mWeatherRecyclerView.setAdapter(weatherAdapter);
 
                 }
                 mDateToday.setText(pWeathers.get(0).getDate());
                 mTempToday.setText(String.valueOf(pWeathers.get(0).getTempMin()) + " \u00B0" + "C");
                 mWeatherMainToday.setText(pWeathers.get(0).getWeatherMain());
+                mImageViewSmallToday.setImageResource(GetSmallImage.getResousrceIDForWeatherSmallImage(pWeathers.get(0).getWeatherMain()));
             }
         }
 
@@ -179,5 +158,18 @@ public class WeatherListFragment extends VisibleFragment {
     private void showEmptyView(final int pErrorCode) {
         mMProgress.setVisibility(View.GONE);
         Toast.makeText(getContext(), "empty " + pErrorCode, Toast.LENGTH_LONG).show();
+    }
+
+    public interface OnNewLocationSelectedListnener{
+        void onNewLocationSelected(Context pContext);
+    }
+
+    private class OnAddNewLocationClickListnener implements View.OnClickListener {
+        @Override
+        public void onClick(final View pView) {
+            if (mOnNewLocationSelectedListnener != null){
+                mOnNewLocationSelectedListnener.onNewLocationSelected(getContext());
+            }
+        }
     }
 }

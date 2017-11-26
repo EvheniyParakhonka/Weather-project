@@ -1,26 +1,28 @@
 package piftik.github.com.weatherproject.adapter;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.List;
 
 import piftik.github.com.weatherproject.R;
-import piftik.github.com.weatherproject.WeatherListFragment;
 import piftik.github.com.weatherproject.models.Weather;
+import piftik.github.com.weatherproject.utils.GetSmallImage;
 
-public class WeatherAdapter extends RecyclerView.Adapter<WeatherAdapter.WeatherHolder> {
+public class WeatherAdapterRecyclerView extends RecyclerView.Adapter<WeatherAdapterRecyclerView.WeatherHolder>  {
 
-    private final WeatherListFragment mWeatherListFragment;
+    private final Context mContext;
     private final List<Weather> mWeathers;
 
     @Override
     public WeatherHolder onCreateViewHolder(final ViewGroup pParent, final int pViewType) {
-        final LayoutInflater layoutInflater = LayoutInflater.from(mWeatherListFragment.getActivity());
+        final LayoutInflater layoutInflater = LayoutInflater.from(mContext.getApplicationContext());
         final View view = layoutInflater.inflate(R.layout.weather_fragment, pParent, false);
         return new WeatherHolder(view);
     }
@@ -36,9 +38,8 @@ public class WeatherAdapter extends RecyclerView.Adapter<WeatherAdapter.WeatherH
         return mWeathers.size();
     }
 
-    //TODO Create interface and put into parameters or context
-    public WeatherAdapter(final WeatherListFragment pWeatherListFragment, final List<Weather> pWeathers) {
-        mWeatherListFragment = pWeatherListFragment;
+    public WeatherAdapterRecyclerView(final Context pContext, final List<Weather> pWeathers) {
+        mContext = pContext;
         mWeathers = pWeathers;
     }
 
@@ -47,6 +48,7 @@ public class WeatherAdapter extends RecyclerView.Adapter<WeatherAdapter.WeatherH
         private final TextView mTemperatureMin;
         private final TextView mTemperatureMax;
         private final TextView mPlace;
+        private final ImageView mSmallImageViewInRecycler;
         private Weather mWeather;
 
         WeatherHolder(final View pView) {
@@ -56,6 +58,7 @@ public class WeatherAdapter extends RecyclerView.Adapter<WeatherAdapter.WeatherH
             mTemperatureMin = (TextView) pView.findViewById(R.id.temperature_text_view_min);
             mTemperatureMax = (TextView) pView.findViewById(R.id.temperature_text_view_max);
             mPlace = (TextView) pView.findViewById(R.id.weather_main_text_view);
+            mSmallImageViewInRecycler = (ImageView) pView.findViewById(R.id.small_image_weather);
 
         }
 
@@ -67,7 +70,9 @@ public class WeatherAdapter extends RecyclerView.Adapter<WeatherAdapter.WeatherH
             mTemperatureMin.setText(tempMin + " \u00B0" + "C");
             final String tempMax = String.valueOf((mWeather.getTempMax()));
             mTemperatureMax.setText(tempMax + " \u00B0" + "C");
-            mPlace.setText(mWeather.getCity() + ", " + mWeather.getCountry());
+            mPlace.setText(mWeather.getWeatherMain());
+            mSmallImageViewInRecycler.setImageResource(
+                GetSmallImage.getResousrceIDForWeatherSmallImage(mWeather.getWeatherMain()));
         }
     }
 }

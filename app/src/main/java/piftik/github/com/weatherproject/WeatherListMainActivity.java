@@ -1,53 +1,30 @@
 package piftik.github.com.weatherproject;
 
-import android.annotation.SuppressLint;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.ViewPager;
+import android.util.Log;
 
-import piftik.github.com.weatherproject.adapter.ViewPagerAdapter;
-import piftik.github.com.weatherproject.update.ServiceToCheckUpdate;
+import piftik.github.com.weatherproject.adapter.AdapterViewPager;
 
-public class WeatherListMainActivity extends FragmentActivity {
-        @SuppressLint("StaticFieldLeak")
-    private static ViewPager mViewPager;
-    private ViewPagerAdapter mPagerAdapter;
-    private Fragment mFragment;
-
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        final Intent intent = new Intent(this, ServiceToCheckUpdate.class);
-        intent.addFlags(Intent.FLAG_FROM_BACKGROUND);
-        intent.putExtra("VERSION_APP", BuildConfig.VERSION_CODE);
-        startService(intent);
-    }
+public class WeatherListMainActivity extends BaseActivity {
+    private static final String TAG = WeatherListMainActivity.class.getSimpleName();
+    private ViewPager mViewPager;
+    private AdapterViewPager mPagerAdapter;
 
 
     @Override
     protected void onCreate(@Nullable final Bundle pSavedInstanceState) {
         super.onCreate(pSavedInstanceState);
         setContentView(R.layout.view_pager);
-
         mViewPager = (ViewPager) findViewById(R.id.view_pager);
-        mPagerAdapter = new ViewPagerAdapter(
+        mPagerAdapter = new AdapterViewPager(
             getSupportFragmentManager());
         mViewPager.setAdapter(mPagerAdapter);
-        addFragmentToViewPager();
-    }
-
-    void createFragment(final Fragment pFragment) {
-        mFragment = pFragment;
-        addFragmentToViewPager();
-    }
-
-    public void replace(final String pCityId) {
-        final Fragment fragment = WeatherListFragment.newInstance(pCityId);
-        getViewPagerAdapter().replace(fragment, visiblePageNowPosition());
+        Log.d(TAG, "onCreate: Create");
+        final CityChoseScreenFragment cityChoseScreenFragment = CityChoseScreenFragment.newInstance();
+        cityChoseScreenFragment.setOnNewPageCityChooseAdd(mPagerAdapter);
+        mPagerAdapter.addFragment(cityChoseScreenFragment, getString(R.string.for_not_choose_city));
     }
 
     public void remove() {
@@ -55,21 +32,13 @@ public class WeatherListMainActivity extends FragmentActivity {
         getViewPagerAdapter().removeItemFromFragment(visiblePageNowPosition());
     }
 
-    private void addFragmentToViewPager() {
 
-        if (mFragment == null) {
-            mPagerAdapter.addFragment(new CityChoseScreenFragment());
-        } else {
-            getViewPagerAdapter().addFragment(mFragment);
-        }
-    }
-
-    private int visiblePageNowPosition() {
+    public  int visiblePageNowPosition() {
         return mViewPager.getCurrentItem();
     }
 
-    private ViewPagerAdapter getViewPagerAdapter() {
-        return ((ViewPagerAdapter) mViewPager.getAdapter());
+    private AdapterViewPager getViewPagerAdapter() {
+        return ((AdapterViewPager) mViewPager.getAdapter());
     }
 
 }

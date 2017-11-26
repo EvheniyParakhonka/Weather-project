@@ -3,6 +3,7 @@
     <string name="get_the_weather">Get The Weather</string>
     <string name="title_to_dialog">New update App</string>
     <string name="message_to_update_dialog">You must update the application</string>
+    <string name="for_not_choose_city">Sorry, but now you need chosse city</string>
     <string-array name="city">
         <item>Brest</item>
         <item>Vitsyebsk</item>

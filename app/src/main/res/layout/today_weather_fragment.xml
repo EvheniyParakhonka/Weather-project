@@ -41,7 +41,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/height_for_ine_text_view"
                 android:layout_marginTop="@dimen/margin_top_for_line_text_view"
-                android:background="@color/colorPrimary"/>
+                android:background="@color/color_primary"/>
 
         </LinearLayout>
 
