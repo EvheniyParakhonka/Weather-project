@@ -23,6 +23,9 @@
         <activity android:name=".BaseActivity"/>
 
         <service android:name=".update.ServiceToCheckUpdate"/>
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="AIzaSyCS0iSnIuikqN7iOApETT5SVQglxjHa9DA"/>
     </application>
 
 </manifest>

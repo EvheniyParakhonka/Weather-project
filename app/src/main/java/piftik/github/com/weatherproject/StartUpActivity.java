@@ -19,7 +19,8 @@ public class StartUpActivity extends FragmentActivity {
         startService(intent);
 
         final Intent startUpIntent = new Intent(this, WeatherListMainActivity.class);
-        startUpIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        startUpIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(startUpIntent);
+
     }
 }

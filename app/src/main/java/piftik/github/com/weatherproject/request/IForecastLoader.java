@@ -11,7 +11,7 @@ public interface IForecastLoader {
 
     void removeListener(final IForecastLOaderListener pListener);
 
-    void getForecast(final String pCityId);
+    void getForecast(final String pCityId,final double pLatitude, final double pLongitude);
 
 //    void getForecastForDay(final long pCityId, final int pDays);
 

@@ -11,8 +11,8 @@
         android:id="@+id/background_image"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:src="@drawable/grodno"
-        android:scaleType="centerCrop"/>
+        android:scaleType="centerCrop"
+        android:src="@drawable/grodno"/>
 
     <include
         android:id="@+id/today_weather_fagment"
@@ -29,14 +29,5 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/today_weather_fagment"
         />
-
-    <ImageView
-        android:id="@+id/added_new_fragment_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:clickable="true"
-        android:focusable="true"
-        android:src="@android:drawable/ic_input_add"/>
 
 </RelativeLayout>

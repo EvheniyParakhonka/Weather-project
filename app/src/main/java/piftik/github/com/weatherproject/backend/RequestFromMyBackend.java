@@ -34,22 +34,25 @@ public class RequestFromMyBackend extends Fragment implements IForecastLoader {
         mListeners.remove(pListener);
 
         if (mListeners.isEmpty()) {
-//            TODO move this logic to method like onListenersEmpty()
-            if (mAsyncEndpoint != null && mAsyncEndpoint.getStatus() == AsyncTask.Status.RUNNING) {
+
+            if (checkStatusAsyncTask()) {
                 mAsyncEndpoint.cancel(true);
             }
         }
     }
 
     @Override
-    public void getForecast(final String pCityId) {
-//        TODO Create method for checking for reuse
-        if (mAsyncEndpoint != null && mAsyncEndpoint.getStatus() == AsyncTask.Status.RUNNING) {
+    public void getForecast(final String pCityId, final double pLatitude, final double pLongitude) {
+
+        if (checkStatusAsyncTask()) {
             return;
         }
-
         mAsyncEndpoint = new AsyncEndpoint();
-        mAsyncEndpoint.execute(pCityId);
+        mAsyncEndpoint.execute(pCityId,String.valueOf(pLatitude),String.valueOf(pLongitude));
+    }
+
+    private boolean checkStatusAsyncTask() {
+        return mAsyncEndpoint != null && mAsyncEndpoint.getStatus() == AsyncTask.Status.RUNNING;
     }
 
     @SuppressLint("StaticFieldLeak")
@@ -71,7 +74,7 @@ public class RequestFromMyBackend extends Fragment implements IForecastLoader {
                 final String inputStream = iHttpClient.makeHttpRequest(url);
 
                 if (inputStream == null) {
-                    jsonResponse = requestFromOpenWeather(pCityId);
+                    jsonResponse = requestFromOpenWeather(pCityId[1], pCityId[2]);
                 } else {
                     jsonResponse = iJsonParser.extractWeatherFromJsonMyBackend(inputStream);
                     final long timeNowToCheckUpgrade = System.currentTimeMillis();
@@ -101,7 +104,7 @@ public class RequestFromMyBackend extends Fragment implements IForecastLoader {
 
     private ArrayList<Weather> requestFromOpenWeather(final String... pCityId){
         final RequestFromOpenWeather requestFromOpenWeather = new RequestFromOpenWeather();
-        return (ArrayList<Weather>) requestFromOpenWeather.getWeatherFromOpenWeather(pCityId[0]);
+        return (ArrayList<Weather>) requestFromOpenWeather.getWeatherFromOpenWeather(pCityId[0], pCityId[1]);
     }
 
 }

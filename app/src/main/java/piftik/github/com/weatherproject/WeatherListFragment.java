@@ -36,22 +36,20 @@ public class WeatherListFragment extends Fragment {
     private WeatherListMainActivity mWeatherListMainActivity;
     private Handler mUiHandler;
     private View mMProgress;
-    private String mCityID;
-    private String mCityIDResult;
-    private View mButton;
     private TextView mTempToday;
     private TextView mDateToday;
     private TextView mWeatherMainToday;
     private ImageView mImageViewSmallToday;
-    private OnNewLocationSelectedListnener mOnNewLocationSelectedListnener;
+    private double mLatitude;
+    private double mLongitude;
+    private String mCityId;
 
-    public void setOnNewLocationSelectedListnener(final OnNewLocationSelectedListnener pOnNewLocationSelectedListnener) {
-        mOnNewLocationSelectedListnener = pOnNewLocationSelectedListnener;
-    }
 
-    public static WeatherListFragment newInstance(final String pCityID) {
+    public static WeatherListFragment newInstance(final String pCityId, final double pLatitude, final double pLongitude) {
         final Bundle bundle = new Bundle();
-        bundle.putString(Constants.BUNDLE_CITY_ID, pCityID);
+        bundle.putDouble(Constants.BUNDLE_LATITUDE_KEY, pLatitude);
+        bundle.putDouble(Constants.BUNDLE_LONGITUDE_KEY, pLongitude);
+        bundle.putString(Constants.BUNDLE_CITY_ID_KEY, pCityId);
         final WeatherListFragment weatherList = new WeatherListFragment();
         weatherList.setArguments(bundle);
         return weatherList;
@@ -68,7 +66,9 @@ public class WeatherListFragment extends Fragment {
         final Bundle bundle = getArguments();
 
         if (bundle != null) {
-            mCityID = bundle.getString(Constants.BUNDLE_CITY_ID);
+            mLatitude = bundle.getDouble(Constants.BUNDLE_LATITUDE_KEY);
+            mLongitude = bundle.getDouble(Constants.BUNDLE_LONGITUDE_KEY);
+            mCityId = bundle.getString(Constants.BUNDLE_CITY_ID_KEY);
         }
 
     }
@@ -77,7 +77,7 @@ public class WeatherListFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        getWeatherAsync(mCityID);
+        getWeatherAsync(mCityId, mLatitude, mLongitude);
     }
 
     @Override
@@ -89,7 +89,7 @@ public class WeatherListFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(final LayoutInflater pInflater, @Nullable final ViewGroup pContainer, @Nullable final Bundle pSavedInstanceState) {
-        final View view = pInflater.inflate(R.layout.fragment_weather_list, pContainer, false);
+        final View view = pInflater.inflate(R.layout.weather_list_fragment, pContainer, false);
 
         mTempToday = (TextView) view.findViewById(R.id.temperature_text_view_today);
         mDateToday = (TextView) view.findViewById(R.id.date_time_text_view_today);
@@ -100,14 +100,10 @@ public class WeatherListFragment extends Fragment {
         mWeatherRecyclerView.addItemDecoration(new DividerItemDecoration(getActivity(), DividerItemDecoration.HORIZONTAL));
 
         mMProgress = view.findViewById(R.id.progress);
-        mButton = view.findViewById(R.id.added_new_fragment_button);
         mMProgress.setVisibility(View.VISIBLE);
-        mButton.setOnClickListener(new OnAddNewLocationClickListnener());
 
         return view;
     }
-
-
 
 
     private class MyIForecastLOaderListener implements IForecastLoader.IForecastLOaderListener {
@@ -144,8 +140,8 @@ public class WeatherListFragment extends Fragment {
 
     }
 
-    private void getWeatherAsync(final String pStingId) {
-        mForecastLoader.getForecast(pStingId);
+    private void getWeatherAsync(final String pCityId, final double pLatitude, final double pLongitude) {
+        mForecastLoader.getForecast(pCityId, pLatitude, pLongitude);
     }
 
     @Override
@@ -158,18 +154,5 @@ public class WeatherListFragment extends Fragment {
     private void showEmptyView(final int pErrorCode) {
         mMProgress.setVisibility(View.GONE);
         Toast.makeText(getContext(), "empty " + pErrorCode, Toast.LENGTH_LONG).show();
-    }
-
-    public interface OnNewLocationSelectedListnener{
-        void onNewLocationSelected(Context pContext);
-    }
-
-    private class OnAddNewLocationClickListnener implements View.OnClickListener {
-        @Override
-        public void onClick(final View pView) {
-            if (mOnNewLocationSelectedListnener != null){
-                mOnNewLocationSelectedListnener.onNewLocationSelected(getContext());
-            }
-        }
     }
 }

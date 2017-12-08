@@ -9,5 +9,9 @@ public final class Constants {
     public static final String CITY_TO_PARSING = "city";
     public static final String COUNTRY_TO_PARSING = "country";
     public static final String UPDATE_DIALOG = "UpdateDialog";
-    public static final String BUNDLE_CITY_ID = "CITY_ID";
+    public static final String BUNDLE_LATITUDE_KEY = "LATITUDE";
+    public static final String BUNDLE_LONGITUDE_KEY = "LONGITUDE";
+    public static final String BUNDLE_CITY_ID_KEY = "CITY_ID";
+    public static final int PLACE_AUTOCOMPLETE_REQUEST_CODE = 1;
+
 }
