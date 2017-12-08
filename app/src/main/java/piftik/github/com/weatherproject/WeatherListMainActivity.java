@@ -34,7 +34,7 @@ public class WeatherListMainActivity extends BaseActivity {
     private void setFirstFragmentToViewPager() {
         final CityChoseScreenFragment cityChoseScreenFragment = CityChoseScreenFragment.newInstance();
         cityChoseScreenFragment.setOnNewPageCityChooseAdd(mViewPagerAdapter);
-        mViewPagerAdapter.addFragment(cityChoseScreenFragment, getString(R.string.for_not_choose_city));
+        mViewPagerAdapter.addFragment(cityChoseScreenFragment);
     }
 
     private void initViewPager() {
@@ -76,7 +76,7 @@ public class WeatherListMainActivity extends BaseActivity {
 
                     final CityChoseScreenFragment cityChoseScreenFragment = CityChoseScreenFragment.newInstance();
                     cityChoseScreenFragment.setOnNewPageCityChooseAdd(mViewPagerAdapter);
-                    getViewPagerAdapter().addFragment(cityChoseScreenFragment, getString(R.string.for_not_choose_city));
+                    getViewPagerAdapter().addFragment(cityChoseScreenFragment);
 
                     if (mViewPager != null) {
                         mViewPager.setCurrentItem(getViewPagerAdapter().getCount());

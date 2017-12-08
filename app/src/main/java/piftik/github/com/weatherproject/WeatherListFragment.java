@@ -1,12 +1,10 @@
 package piftik.github.com.weatherproject;
 
 import android.annotation.SuppressLint;
-import android.content.Context;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -28,7 +26,7 @@ import piftik.github.com.weatherproject.utils.GetSmallImage;
 
 import static android.content.ContentValues.TAG;
 
-public class WeatherListFragment extends Fragment {
+public class WeatherListFragment extends BaseFragment {
 
     private RecyclerView mWeatherRecyclerView;
     private IForecastLoader mForecastLoader;
@@ -103,6 +101,11 @@ public class WeatherListFragment extends Fragment {
         mMProgress.setVisibility(View.VISIBLE);
 
         return view;
+    }
+
+    @Override
+    public String getTitle() {
+        return mCityId;
     }
 
 

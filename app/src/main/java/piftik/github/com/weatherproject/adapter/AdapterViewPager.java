@@ -8,12 +8,12 @@ import android.support.v4.view.ViewPager;
 import java.util.ArrayList;
 import java.util.List;
 
+import piftik.github.com.weatherproject.BaseFragment;
 import piftik.github.com.weatherproject.CityChoseScreenFragment;
 import piftik.github.com.weatherproject.WeatherListFragment;
 
 public class AdapterViewPager extends FragmentStatePagerAdapter implements CityChoseScreenFragment.OnNewPageCityChosseAddListnener {
-    private List<Fragment> mFragments = new ArrayList<>();
-    private List<String> mTitels = new ArrayList<>();
+    private List<BaseFragment> mFragments = new ArrayList<>();
     private ViewPager mViewPager;
 
     public AdapterViewPager(final FragmentManager pFragmentManager, final ViewPager pViewPager) {
@@ -34,7 +34,7 @@ public class AdapterViewPager extends FragmentStatePagerAdapter implements CityC
 
     @Override
     public CharSequence getPageTitle(final int pPosition) {
-        return mTitels.get(pPosition);
+        return mFragments.get(pPosition).getTitle();
     }
 
     @Override
@@ -42,21 +42,18 @@ public class AdapterViewPager extends FragmentStatePagerAdapter implements CityC
         return mFragments != null ? mFragments.size() : 0;
     }
 
-    public void addFragment(final Fragment pFragment, final String pCityForTittle) {
-        mTitels.add(pCityForTittle);
+    public void addFragment(final BaseFragment pFragment) {
         mFragments.add(pFragment);
         notifyDataSetChanged();
     }
 
-    private void replace(final Fragment pFragment, final int pPosition, final String pCityForTittle) {
+    private void replace(final BaseFragment pFragment, final int pPosition, final String pCityForTittle) {
         mFragments.set(pPosition, pFragment);
-        mTitels.set(pPosition, pCityForTittle);
         notifyDataSetChanged();
     }
 
     public void removeItemFromFragment(final int pPosition) {
         mFragments.remove(pPosition);
-        mTitels.remove(pPosition);
         notifyDataSetChanged();
     }
 
