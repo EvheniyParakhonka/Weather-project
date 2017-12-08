@@ -37,12 +37,6 @@
                 android:layout_height="wrap_content"
                 tools:text="cloud"/>
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/height_for_ine_text_view"
-                android:layout_marginTop="@dimen/margin_top_for_line_text_view"
-                android:background="@color/color_primary"/>
-
         </LinearLayout>
 
         <ImageView

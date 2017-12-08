@@ -1,9 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v7.widget.CardView
-    android:id="@+id/container_for_autocomplete"
+<LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-</android.support.v7.widget.CardView>
+    <TextView
+        android:id="@+id/city_autocomplet_choose_edit_text"
+        android:layout_width="match_parent"
+        android:layout_height="32dp"
+        android:clickable="true"
+        android:focusable="true"
+        android:textSize="@dimen/text_size_for_city_chose_text_view"
+        tools:text="Гродно"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/height_for_ine_text_view"
+        android:background="@color/color_primary"/>
+
+    <Button
+        android:id="@+id/get_weather_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/get_weather"/>
+
+</LinearLayout>

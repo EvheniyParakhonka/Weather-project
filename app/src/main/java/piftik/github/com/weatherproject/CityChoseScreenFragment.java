@@ -9,6 +9,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
 import com.google.android.gms.common.GooglePlayServicesRepairableException;
@@ -26,6 +27,8 @@ public class CityChoseScreenFragment extends BaseFragment {
     private String mCity;
     private double mLatitude;
     private double mLongitude;
+    private TextView mCityChooseEditText;
+    private View mGetWeatherButton;
 
     public static CityChoseScreenFragment newInstance() {
         return new CityChoseScreenFragment();
@@ -38,16 +41,7 @@ public class CityChoseScreenFragment extends BaseFragment {
     @Override
     public void onCreate(@Nullable final Bundle pSavedInstanceState) {
         super.onCreate(pSavedInstanceState);
-        try {
-            final Intent intentToAutocomplete =
-                new PlaceAutocomplete.IntentBuilder(PlaceAutocomplete.MODE_FULLSCREEN)
-                    .build(getActivity());
-            startActivityForResult(intentToAutocomplete, Constants.PLACE_AUTOCOMPLETE_REQUEST_CODE);
-        } catch (final GooglePlayServicesRepairableException pE) {
-            Log.e(TAG, "onCreateView: Place Autocomplete exe" + pE);
-        } catch (final GooglePlayServicesNotAvailableException pE) {
-            Log.e(TAG, "onCreateView: Place Autocomplete exe" + pE);
-        }
+
 
     }
 
@@ -55,9 +49,34 @@ public class CityChoseScreenFragment extends BaseFragment {
 
     @Override
     public View onCreateView(final LayoutInflater pInflater, @Nullable final ViewGroup pContainer, @Nullable final Bundle pSavedInstanceState) {
-        return pInflater.inflate(R.layout.city_chose_screen, pContainer, false);
+        final View view = pInflater.inflate(R.layout.city_chose_screen, pContainer, false);
+        mCityChooseEditText = (TextView) view.findViewById(R.id.city_autocomplet_choose_edit_text);
+        mGetWeatherButton = view.findViewById(R.id.get_weather_button);
+
+        return view;
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        mCityChooseEditText.setCursorVisible(false);
+
+        mCityChooseEditText.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(final View pView) {
+                try {
+                    final Intent intentToAutocomplete =
+                        new PlaceAutocomplete.IntentBuilder(PlaceAutocomplete.MODE_FULLSCREEN)
+                            .build(getActivity());
+                    startActivityForResult(intentToAutocomplete, Constants.PLACE_AUTOCOMPLETE_REQUEST_CODE);
+                } catch (final GooglePlayServicesRepairableException pE) {
+                    Log.e(TAG, "onCreateView: Place Autocomplete exe" + pE);
+                } catch (final GooglePlayServicesNotAvailableException pE) {
+                    Log.e(TAG, "onCreateView: Place Autocomplete exe" + pE);
+                }
+            }
+        });
+    }
 
     @Override
     public void onActivityResult(final int pRequestCode, final int pResultCode, final Intent pData) {
@@ -70,9 +89,16 @@ public class CityChoseScreenFragment extends BaseFragment {
                 mLatitude = latlong.latitude;
                 mLongitude = latlong.longitude;
 
-                if (mOnNewLocationSelectedListnener != null) {
-                    mOnNewLocationSelectedListnener.onNewPageCityChosseAdd(mCity, mLatitude, mLongitude);
-                }
+                mCityChooseEditText.setText(mCity);
+                mGetWeatherButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(final View pView) {
+                        if (mOnNewLocationSelectedListnener != null) {
+                            mOnNewLocationSelectedListnener.onNewPageCityChosseAdd(mCity, mLatitude, mLongitude);
+                        }
+                    }
+                });
+
             } else if (pResultCode == PlaceAutocomplete.RESULT_ERROR) {
                 final Status status = PlaceAutocomplete.getStatus(getActivity(), pData);
                 Log.i(TAG, status.getStatusMessage());

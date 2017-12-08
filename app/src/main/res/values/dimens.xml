@@ -5,4 +5,5 @@
     <dimen name="height_for_ine_text_view">1dp</dimen>
     <dimen name="text_size_temp_text_view">30sp</dimen>
     <dimen name="width_height_for_image_view">50dp</dimen>
+    <dimen name="text_size_for_city_chose_text_view">22sp</dimen>
 </resources>
