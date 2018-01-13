@@ -1,1 +1,1 @@
-include ':app', ':backend', ':image-loader'
+include ':app', ':backend', ':image-loader', ':backend-servlet', ':backend-servlet'

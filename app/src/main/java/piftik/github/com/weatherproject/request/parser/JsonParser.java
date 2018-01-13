@@ -23,15 +23,12 @@ public class JsonParser implements IJsonParser {
     public ArrayList<Weather> extractWeatherFromJson(final String pJsonRequest, final String pCityId) {
         final ArrayList<Weather> forecasts = new ArrayList<>();
 
-//        String jsonResponse = null;
-//
-//        if (TextUtils.isEmpty(jsonResponse)) {
-//            return null;
-//        }
+
         try {
             final JSONObject baseJsonResponse = new JSONObject(pJsonRequest);
             final JSONArray featureArray = baseJsonResponse.getJSONArray("list");
             final JSONObject placeProperitis = baseJsonResponse.getJSONObject(Constants.CITY_TO_PARSING);
+            final long id_city = placeProperitis.getLong("id");
 
             for (int i = 0; i < featureArray.length(); i++) {
                 final JSONObject firstProperitis = featureArray.getJSONObject(i);
@@ -48,8 +45,8 @@ public class JsonParser implements IJsonParser {
                 final String placeOfCit = placeProperitis.getString("name");
                 final String country = placeProperitis.getString(Constants.COUNTRY_TO_PARSING);
 
-                forecasts.add(new Weather(Converter.convertUnixTimeToDays(data), weatherMain, Converter.convertTemperatureToCelsius(tempToDayMin),
-                        Converter.convertTemperatureToCelsius(tempToDayMax), country, pCityId));
+                forecasts.add(new Weather(id_city, Converter.convertUnixTimeToDays(data), weatherMain, Converter.convertTemperatureToCelsius(tempToDayMin),
+                        Converter.convertTemperatureToCelsius(tempToDayMax), country, placeOfCit));
             }
         } catch (final JSONException pException) {
             Log.e(TAG, "Error with parsing " + pException);

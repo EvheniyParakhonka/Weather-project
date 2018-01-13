@@ -1,10 +1,12 @@
-package piftik.github.com.weatherproject;
+package piftik.github.com.weatherproject.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentActivity;
 
+import piftik.github.com.weatherproject.BuildConfig;
+import piftik.github.com.weatherproject.activity.WeatherListMainActivity;
 import piftik.github.com.weatherproject.update.ServiceToCheckUpdate;
 
 public class StartUpActivity extends FragmentActivity {

@@ -1,4 +1,4 @@
-package piftik.github.com.weatherproject;
+package piftik.github.com.weatherproject.activity;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;

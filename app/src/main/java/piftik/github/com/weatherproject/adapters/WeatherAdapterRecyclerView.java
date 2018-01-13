@@ -1,4 +1,4 @@
-package piftik.github.com.weatherproject.adapter;
+package piftik.github.com.weatherproject.adapters;
 
 import android.annotation.SuppressLint;
 import android.content.Context;

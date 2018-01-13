@@ -11,7 +11,13 @@ public final class Constants {
     public static final String UPDATE_DIALOG = "UpdateDialog";
     public static final String BUNDLE_LATITUDE_KEY = "LATITUDE";
     public static final String BUNDLE_LONGITUDE_KEY = "LONGITUDE";
-    public static final String BUNDLE_CITY_ID_KEY = "CITY_ID";
+    public static final String BUNDLE_CITY_NAME_KEY = "CITY_ID";
     public static final int PLACE_AUTOCOMPLETE_REQUEST_CODE = 1;
+    public static final String KEY_SHPREF_COUNT_PAGE = "KEY_SHPREF_COUNT_PAGE";
+    public static final String KEY_WHAT_A_FRAGMENT_IN_PAGE = "WHAT_A_FRAGMENT_IN_PAGE_";
+    public static final String KEY_CITY_NAME = "KEY_CITY_NAME_";
+    public static final String KEY_CITY_LATIT = "KEY_CITY_LATIT_";
+    public static final String KEY_CITY_LONG = "KEY_CITY_LONG_";
+    public static final int MAIN_LOADER_ID = 0;
 
 }

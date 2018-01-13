@@ -1,4 +1,4 @@
-package piftik.github.com.weatherproject;
+package piftik.github.com.weatherproject.fragments;
 
 
 import android.app.Activity;
@@ -18,6 +18,7 @@ import com.google.android.gms.location.places.Place;
 import com.google.android.gms.location.places.ui.PlaceAutocomplete;
 import com.google.android.gms.maps.model.LatLng;
 
+import piftik.github.com.weatherproject.R;
 import piftik.github.com.weatherproject.utils.Constants;
 
 public class CityChoseScreenFragment extends BaseFragment {
@@ -36,13 +37,6 @@ public class CityChoseScreenFragment extends BaseFragment {
 
     public void setOnNewPageCityChooseAdd(final OnNewPageCityChosseAddListnener pOnNewLocationSelectedListnener) {
         mOnNewLocationSelectedListnener = pOnNewLocationSelectedListnener;
-    }
-
-    @Override
-    public void onCreate(@Nullable final Bundle pSavedInstanceState) {
-        super.onCreate(pSavedInstanceState);
-
-
     }
 
     @Nullable
@@ -111,6 +105,11 @@ public class CityChoseScreenFragment extends BaseFragment {
     @Override
     public String getTitle() {
         return null;
+    }
+
+    @Override
+    public boolean whatAFragment() {
+        return false;
     }
 
     public interface OnNewPageCityChosseAddListnener {

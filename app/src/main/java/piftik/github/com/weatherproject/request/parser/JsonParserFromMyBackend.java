@@ -26,12 +26,13 @@ public class JsonParserFromMyBackend implements IJsonParserFromMyBackend {
             final String country = baseJsonResponse.getString(Constants.COUNTRY_TO_PARSING);
 
             for (int i = 0; i < featureArray.length(); i++) {
+                final long id = 0;
                 final JSONObject firstProperitis = featureArray.getJSONObject(i);
                 final String date = firstProperitis.getString("date");
                 final double tempMin = firstProperitis.getDouble("tempMin");
                 final double tempMax = firstProperitis.getDouble("tempMax");
                 final String weatherMain = firstProperitis.getString("weatherMain");
-                forecasts.add(new Weather(date, weatherMain, tempMin, tempMax,
+                forecasts.add(new Weather(id, date, weatherMain, tempMin, tempMax,
                         country, city));
             }
         } catch (final JSONException pE) {

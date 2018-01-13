@@ -1,6 +1,6 @@
 package piftik.github.com.weatherproject.request;
 
-import java.util.ArrayList;
+import java.util.List;
 
 import piftik.github.com.weatherproject.backend.RequestFromMyBackend;
 import piftik.github.com.weatherproject.models.Weather;
@@ -23,7 +23,7 @@ public interface IForecastLoader {
     }
 
     interface IForecastLOaderListener {
-        void onSuccess(ArrayList<Weather> pForecast);
+        void onSuccess(List<Weather> pForecast);
 
         void onError(final int pErrorCode);
     }
