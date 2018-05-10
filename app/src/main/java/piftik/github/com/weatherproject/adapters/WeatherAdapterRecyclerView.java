@@ -17,12 +17,12 @@ import piftik.github.com.weatherproject.utils.GetSmallImage;
 
 public class WeatherAdapterRecyclerView extends RecyclerView.Adapter<WeatherAdapterRecyclerView.WeatherHolder>  {
 
-    private final Context mContext;
+//    private final Context mContext;
     private final List<Weather> mWeathers;
 
     @Override
     public WeatherHolder onCreateViewHolder(final ViewGroup pParent, final int pViewType) {
-        final LayoutInflater layoutInflater = LayoutInflater.from(mContext.getApplicationContext());
+        final LayoutInflater layoutInflater = LayoutInflater.from(pParent.getContext().getApplicationContext());
         final View view = layoutInflater.inflate(R.layout.weather_fragment, pParent, false);
         return new WeatherHolder(view);
     }
@@ -39,7 +39,6 @@ public class WeatherAdapterRecyclerView extends RecyclerView.Adapter<WeatherAdap
     }
 
     public WeatherAdapterRecyclerView(final Context pContext, final List<Weather> pWeathers) {
-        mContext = pContext;
         mWeathers = pWeathers;
     }
 

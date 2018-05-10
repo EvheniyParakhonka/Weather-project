@@ -34,7 +34,6 @@ import piftik.github.com.weatherproject.utils.GetSmallImage;
 
 import static android.content.ContentValues.TAG;
 
-//import piftik.github.com.weatherproject.base.WeatherCursorLoader;
 
 public class WeatherListFragment extends BaseFragment implements IOnTaskCompleted {
 
@@ -81,7 +80,7 @@ public class WeatherListFragment extends BaseFragment implements IOnTaskComplete
             mLatitude = bundle.getDouble(Constants.BUNDLE_LATITUDE_KEY);
             mLongitude = bundle.getDouble(Constants.BUNDLE_LONGITUDE_KEY);
             mCityName = bundle.getString(Constants.BUNDLE_CITY_NAME_KEY);
-            mCityID = getActivity().getSharedPreferences("pref", Context.MODE_PRIVATE).getLong(mCityName, 0);
+            mCityID = getActivity().getSharedPreferences(Constants.PREF_FOR_WEATHER, Context.MODE_PRIVATE).getLong(mCityName, 0);
         }
 
     }
@@ -145,12 +144,12 @@ public class WeatherListFragment extends BaseFragment implements IOnTaskComplete
     }
 
     @Override
-    public double whatALat() {
+    public double whatALatitude() {
         return mLatitude;
     }
 
     @Override
-    public double whatALong() {
+    public double whatALongitude() {
         return mLongitude;
     }
 
@@ -178,7 +177,7 @@ public class WeatherListFragment extends BaseFragment implements IOnTaskComplete
                     mRequestAdapter.add(pWeathers.get(i));
 
                 }
-                getActivity().getSharedPreferences("pref", Context.MODE_PRIVATE).
+                getActivity().getSharedPreferences(Constants.PREF_FOR_WEATHER, Context.MODE_PRIVATE).
                     edit().putLong(mCityName, pWeathers.get(0).getId()).apply();
             }
         }

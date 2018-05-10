@@ -7,11 +7,11 @@ public abstract class BaseFragment extends Fragment {
 
     public abstract boolean whatAFragment();
 
-    public double whatALat() {
+    public double whatALatitude() {
         return 0;
     }
 
-    public double whatALong() {
+    public double whatALongitude() {
         return 0;
     }
 

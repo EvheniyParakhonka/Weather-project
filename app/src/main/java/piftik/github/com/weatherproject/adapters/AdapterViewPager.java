@@ -72,11 +72,11 @@ public class AdapterViewPager extends FragmentStatePagerAdapter implements CityC
     }
 
     public float getLat(final int pPosition) {
-        return (float) mFragments.get(pPosition).whatALat();
+        return (float) mFragments.get(pPosition).whatALatitude();
     }
 
     public float getLong(final int pPosition) {
-        return (float) mFragments.get(pPosition).whatALong();
+        return (float) mFragments.get(pPosition).whatALongitude();
     }
 }
 

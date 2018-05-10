@@ -19,5 +19,6 @@ public final class Constants {
     public static final String KEY_CITY_LATIT = "KEY_CITY_LATIT_";
     public static final String KEY_CITY_LONG = "KEY_CITY_LONG_";
     public static final int MAIN_LOADER_ID = 0;
+    public static final String PREF_FOR_WEATHER = "pref";
 
 }

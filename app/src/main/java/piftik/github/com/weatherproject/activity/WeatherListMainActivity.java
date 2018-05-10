@@ -52,7 +52,9 @@ public class WeatherListMainActivity extends BaseActivity {
         mPref = getPreferences(MODE_PRIVATE);
         @SuppressLint("CommitPrefEdits") final SharedPreferences.Editor edit = mPref.edit();
         final int countPageInViewPager = getViewPagerAdapter().getCount();
-
+//        TODO refact pref to bd
+//        TODO BD work in asyncTask
+//        TODO Work in OnSaveInstateState
         if (countPageInViewPager > 0) {
             edit.putInt(Constants.KEY_SHPREF_COUNT_PAGE, countPageInViewPager);
             for (int i = 0; i < countPageInViewPager; i++) {
